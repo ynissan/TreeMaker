@@ -485,130 +485,130 @@ def makeTreeFromMiniAOD(self,process):
     # The decision was made to include the filter decision flags
     # as individual branches in the tree
     
-#     if not self.fastsim: # MET filters are not run for fastsim samples
-# 
-#         from TreeMaker.Utils.filterdecisionproducer_cfi import filterDecisionProducer
-#         
-#         process.PrimaryVertexFilter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_goodVertices"),
-#         )
-#         self.VarsInt.extend(['PrimaryVertexFilter'])
-# 
-#         process.CSCTightHaloFilter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_CSCTightHalo2015Filter"),
-#         )
-#         self.VarsInt.extend(['CSCTightHaloFilter'])
-#         
-#         process.globalTightHalo2016Filter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_globalTightHalo2016Filter"),
-#         )
-#         self.VarsInt.extend(['globalTightHalo2016Filter'])
-#         
-#         process.globalSuperTightHalo2016Filter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_globalSuperTightHalo2016Filter"),
-#         )
-#         self.VarsInt.extend(['globalSuperTightHalo2016Filter'])
-#         
-#         process.HBHENoiseFilter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_HBHENoiseFilter"),
-#         )
-#         self.VarsInt.extend(['HBHENoiseFilter'])
-#         
-#         process.HBHEIsoNoiseFilter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_HBHENoiseIsoFilter"),
-#         )
-#         self.VarsInt.extend(['HBHEIsoNoiseFilter'])
-#         
-#         process.EcalDeadCellTriggerPrimitiveFilter = filterDecisionProducer.clone(
-#             trigTagArg1 = cms.string('TriggerResults'),
-#             trigTagArg2 = cms.string(''),
-#             trigTagArg3 = cms.string(self.tagname),
-#             filterName  = cms.string("Flag_EcalDeadCellTriggerPrimitiveFilter"),
-#         )
-#         self.VarsInt.extend(['EcalDeadCellTriggerPrimitiveFilter'])
-#         
-#         process.eeBadScFilter = filterDecisionProducer.clone(
-#             trigTagArg1  = cms.string('TriggerResults'),
-#             trigTagArg2  = cms.string(''),
-#             trigTagArg3  = cms.string(self.tagname),
-#             filterName  =   cms.string("Flag_eeBadScFilter"),
-#         )
-#         self.VarsInt.extend(['eeBadScFilter'])
-#         
-#         process.ecalBadCalibFilter = filterDecisionProducer.clone(
-#             trigTagArg1  = cms.string('TriggerResults'),
-#             trigTagArg2  = cms.string(''),
-#             trigTagArg3  = cms.string(self.tagname),
-#             filterName  =   cms.string("Flag_ecalBadCalibFilter"),
-#         )
-#         self.VarsInt.extend(['ecalBadCalibFilter'])
-# 
-#         # some filters need to be rerun
-#         from RecoMET.METFilters.ecalBadCalibFilter_cfi import ecalBadCalibFilter
-#         process.ecalBadCalibReducedFilter = ecalBadCalibFilter.clone(
-#             EcalRecHitSource = cms.InputTag("reducedEgamma:reducedEERecHits"),
-#             ecalMinEt = cms.double(50.),
-#             baddetEcal = cms.vuint32([
-#                 872439604,872422825,872420274,872423218,
-#                 872423215,872416066,872435036,872439336,
-#                 872420273,872436907,872420147,872439731,
-#                 872436657,872420397,872439732,872439339,
-#                 872439603,872422436,872439861,872437051,
-#                 872437052,872420649,872422436,872421950,
-#                 872437185,872422564,872421566,872421695,
-#                 872421955,872421567,872437184,872421951,
-#                 872421694,872437056,872437057,872437313
-#             ]),
-#             taggingMode = cms.bool(True),
-#         )
-#         process.ecalBadCalibReducedExtraFilter = process.ecalBadCalibReducedFilter.clone(
-#             baddetEcal = cms.vuint32([
-#                 872439604,872422825,872420274,872423218,
-#                 872423215,872416066,872435036,872439336,
-#                 872420273,872436907,872420147,872439731,
-#                 872436657,872420397,872439732,872439339,
-#                 872439603,872422436,872439861,872437051,
-#                 872437052,872420649,872421950,872437185,
-#                 872422564,872421566,872421695,872421955,
-#                 872421567,872437184,872421951,872421694,
-#                 872437056,872437057,872437313,872438182,
-#                 872438951,872439990,872439864,872439609,
-#                 872437181,872437182,872437053,872436794,
-#                 872436667,872436536,872421541,872421413,
-#                 872421414,872421031,872423083,872421439
-#             ])
-#         )
-#         self.VarsBool.extend(['ecalBadCalibReducedFilter','ecalBadCalibReducedExtraFilter'])
-# 
-#         process.load('RecoMET.METFilters.BadChargedCandidateFilter_cfi')
-#         process.BadChargedCandidateFilter.muons = cms.InputTag("slimmedMuons")
-#         process.BadChargedCandidateFilter.PFCandidates = cms.InputTag("packedPFCandidates")
-#         process.BadChargedCandidateFilter.taggingMode = True
-#         self.VarsBool.extend(['BadChargedCandidateFilter'])
-#         
-#         process.load('RecoMET.METFilters.BadPFMuonFilter_cfi')
-#         process.BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
-#         process.BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
-#         process.BadPFMuonFilter.taggingMode = True
-#         self.VarsBool.extend(['BadPFMuonFilter'])
+    if not self.fastsim: # MET filters are not run for fastsim samples
+
+        from TreeMaker.Utils.filterdecisionproducer_cfi import filterDecisionProducer
+        
+        process.PrimaryVertexFilter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_goodVertices"),
+        )
+        self.VarsInt.extend(['PrimaryVertexFilter'])
+
+        process.CSCTightHaloFilter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_CSCTightHalo2015Filter"),
+        )
+        self.VarsInt.extend(['CSCTightHaloFilter'])
+        
+        process.globalTightHalo2016Filter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_globalTightHalo2016Filter"),
+        )
+        self.VarsInt.extend(['globalTightHalo2016Filter'])
+        
+        process.globalSuperTightHalo2016Filter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_globalSuperTightHalo2016Filter"),
+        )
+        self.VarsInt.extend(['globalSuperTightHalo2016Filter'])
+        
+        process.HBHENoiseFilter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_HBHENoiseFilter"),
+        )
+        self.VarsInt.extend(['HBHENoiseFilter'])
+        
+        process.HBHEIsoNoiseFilter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_HBHENoiseIsoFilter"),
+        )
+        self.VarsInt.extend(['HBHEIsoNoiseFilter'])
+        
+        process.EcalDeadCellTriggerPrimitiveFilter = filterDecisionProducer.clone(
+            trigTagArg1 = cms.string('TriggerResults'),
+            trigTagArg2 = cms.string(''),
+            trigTagArg3 = cms.string(self.tagname),
+            filterName  = cms.string("Flag_EcalDeadCellTriggerPrimitiveFilter"),
+        )
+        self.VarsInt.extend(['EcalDeadCellTriggerPrimitiveFilter'])
+        
+        process.eeBadScFilter = filterDecisionProducer.clone(
+            trigTagArg1  = cms.string('TriggerResults'),
+            trigTagArg2  = cms.string(''),
+            trigTagArg3  = cms.string(self.tagname),
+            filterName  =   cms.string("Flag_eeBadScFilter"),
+        )
+        self.VarsInt.extend(['eeBadScFilter'])
+        
+        process.ecalBadCalibFilter = filterDecisionProducer.clone(
+            trigTagArg1  = cms.string('TriggerResults'),
+            trigTagArg2  = cms.string(''),
+            trigTagArg3  = cms.string(self.tagname),
+            filterName  =   cms.string("Flag_ecalBadCalibFilter"),
+        )
+        self.VarsInt.extend(['ecalBadCalibFilter'])
+
+        # some filters need to be rerun
+        from RecoMET.METFilters.ecalBadCalibFilter_cfi import ecalBadCalibFilter
+        process.ecalBadCalibReducedFilter = ecalBadCalibFilter.clone(
+            EcalRecHitSource = cms.InputTag("reducedEgamma:reducedEERecHits"),
+            ecalMinEt = cms.double(50.),
+            baddetEcal = cms.vuint32([
+                872439604,872422825,872420274,872423218,
+                872423215,872416066,872435036,872439336,
+                872420273,872436907,872420147,872439731,
+                872436657,872420397,872439732,872439339,
+                872439603,872422436,872439861,872437051,
+                872437052,872420649,872422436,872421950,
+                872437185,872422564,872421566,872421695,
+                872421955,872421567,872437184,872421951,
+                872421694,872437056,872437057,872437313
+            ]),
+            taggingMode = cms.bool(True),
+        )
+        process.ecalBadCalibReducedExtraFilter = process.ecalBadCalibReducedFilter.clone(
+            baddetEcal = cms.vuint32([
+                872439604,872422825,872420274,872423218,
+                872423215,872416066,872435036,872439336,
+                872420273,872436907,872420147,872439731,
+                872436657,872420397,872439732,872439339,
+                872439603,872422436,872439861,872437051,
+                872437052,872420649,872421950,872437185,
+                872422564,872421566,872421695,872421955,
+                872421567,872437184,872421951,872421694,
+                872437056,872437057,872437313,872438182,
+                872438951,872439990,872439864,872439609,
+                872437181,872437182,872437053,872436794,
+                872436667,872436536,872421541,872421413,
+                872421414,872421031,872423083,872421439
+            ])
+        )
+        self.VarsBool.extend(['ecalBadCalibReducedFilter','ecalBadCalibReducedExtraFilter'])
+
+        process.load('RecoMET.METFilters.BadChargedCandidateFilter_cfi')
+        process.BadChargedCandidateFilter.muons = cms.InputTag("slimmedMuons")
+        process.BadChargedCandidateFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+        process.BadChargedCandidateFilter.taggingMode = True
+        self.VarsBool.extend(['BadChargedCandidateFilter'])
+        
+        process.load('RecoMET.METFilters.BadPFMuonFilter_cfi')
+        process.BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
+        process.BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+        process.BadPFMuonFilter.taggingMode = True
+        self.VarsBool.extend(['BadPFMuonFilter'])
         
     ## ----------------------------------------------------------------------------------------------
     ## Triggers
@@ -624,38 +624,38 @@ def makeTreeFromMiniAOD(self,process):
     # If the version number of the input trigger name is omitted,
     # any matching trigger will be included (default behavior)
 
-#     from TreeMaker.Utils.triggerproducer_cfi import triggerProducer
-#     from TreeMaker.TreeMaker.triggerNameList import triggerNameList as _triggerNameList
-#     process.TriggerProducer = triggerProducer.clone(
-#         trigTagArg1     = cms.string('TriggerResults'),
-#         trigTagArg2     = cms.string(''),
-#         trigTagArg3     = cms.string(self.hlttagname),
-#         prescaleTagArg1  = cms.string('patTrigger'),
-#         prescaleTagArg2  = cms.string(''),
-#         prescaleTagArg3  = cms.string(''),
-#         saveHLTObj = cms.bool(False),
-#         triggerNameList = _triggerNameList
-#     )
-#     self.VectorInt.extend(['TriggerProducer:TriggerPass','TriggerProducer:TriggerPrescales','TriggerProducer:TriggerVersion'])
-#     self.VectorString.extend(['TriggerProducer:TriggerNames'])
-#     if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0]:
-#         process.TriggerProducer.saveHLTObj = cms.bool(True)
-#         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
-#         process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
-#         self.VectorTLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
-#     elif "SingleMuon" in process.source.fileNames[0]:
-#         process.TriggerProducer.saveHLTObj = cms.bool(True)
-#         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Mu50_v")
-#         process.TriggerProducer.saveHLTObjName = cms.string("HLTMuonObjects")
-#         self.VectorTLorentzVector.extend(['TriggerProducer:HLTMuonObjects'])
-# 
-#     if not self.geninfo:
-#         from TreeMaker.Utils.prescaleweightproducer_cfi import prescaleweightProducer
-#         process.PrescaleWeightProducer = prescaleweightProducer.clone()
-#         process.PrescaleWeightProducer.bits.setProcessName(self.hlttagname)
-#         self.VarsDouble.extend(['PrescaleWeightProducer:weight(PrescaleWeightHT)'])
-#         self.VarsDouble.extend(['PrescaleWeightProducer:ht(HTOnline)'])
-#         self.VarsDouble.extend(['PrescaleWeightProducer:mht(MHTOnline)'])
+    from TreeMaker.Utils.triggerproducer_cfi import triggerProducer
+    from TreeMaker.TreeMaker.triggerNameList import triggerNameList as _triggerNameList
+    process.TriggerProducer = triggerProducer.clone(
+        trigTagArg1     = cms.string('TriggerResults'),
+        trigTagArg2     = cms.string(''),
+        trigTagArg3     = cms.string(self.hlttagname),
+        prescaleTagArg1  = cms.string('patTrigger'),
+        prescaleTagArg2  = cms.string(''),
+        prescaleTagArg3  = cms.string(''),
+        saveHLTObj = cms.bool(False),
+        triggerNameList = _triggerNameList
+    )
+    self.VectorInt.extend(['TriggerProducer:TriggerPass','TriggerProducer:TriggerPrescales','TriggerProducer:TriggerVersion'])
+    self.VectorString.extend(['TriggerProducer:TriggerNames'])
+    if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0]:
+        process.TriggerProducer.saveHLTObj = cms.bool(True)
+        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
+        process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
+        self.VectorTLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
+    elif "SingleMuon" in process.source.fileNames[0]:
+        process.TriggerProducer.saveHLTObj = cms.bool(True)
+        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Mu50_v")
+        process.TriggerProducer.saveHLTObjName = cms.string("HLTMuonObjects")
+        self.VectorTLorentzVector.extend(['TriggerProducer:HLTMuonObjects'])
+
+    if not self.geninfo:
+        from TreeMaker.Utils.prescaleweightproducer_cfi import prescaleweightProducer
+        process.PrescaleWeightProducer = prescaleweightProducer.clone()
+        process.PrescaleWeightProducer.bits.setProcessName(self.hlttagname)
+        self.VarsDouble.extend(['PrescaleWeightProducer:weight(PrescaleWeightHT)'])
+        self.VarsDouble.extend(['PrescaleWeightProducer:ht(HTOnline)'])
+        self.VarsDouble.extend(['PrescaleWeightProducer:mht(MHTOnline)'])
 
     
     ## ----------------------------------------------------------------------------------------------
@@ -663,323 +663,323 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     
     # list of clean tags - ignore jet ID for jets matching these objects
-#     SkipTag = cms.VInputTag(
-#         cms.InputTag('LeptonsNew:IdIsoMuon'),
-#         cms.InputTag('LeptonsNew:IdIsoElectron'),
-#         cms.InputTag('IsolatedElectronTracksVeto'),
-#         cms.InputTag('IsolatedMuonTracksVeto'),
-#         cms.InputTag('IsolatedPionTracksVeto'),
-#     )
-#     
-#     # get the JERs (disabled by default)
-#     # this requires the user to download the .db file from this github
-#     # https://github.com/cms-jet/JRDatabase
-#     if len(self.jerfile)>0:
-#         #get name of JERs without any directories
-#         JERera = self.jerfile.split('/')[-1]
-#         JERPatch = cms.string('sqlite_file:'+self.jerfile+'.db')
-#     
-#         process.jer = cms.ESSource("PoolDBESSource",CondDBSetup,
-#             connect = JERPatch,
-#             toGet = cms.VPSet(
-#                 cms.PSet(
-#                     record = cms.string('JetResolutionRcd'),
-#                     tag    = cms.string('JR_'+JERera+'_PtResolution_AK4PFchs'),
-#                     label  = cms.untracked.string('AK4PFchs_pt')
-#                 ),
-#                 cms.PSet(
-#                     record = cms.string('JetResolutionScaleFactorRcd'),
-#                     tag    = cms.string('JR_'+JERera+'_SF_AK4PFchs'),
-#                     label  = cms.untracked.string('AK4PFchs')
-#                 ),
-#                 cms.PSet(
-#                     record = cms.string('JetResolutionRcd'),
-#                     tag    = cms.string('JR_'+JERera+'_PtResolution_AK8PFPuppi'),
-#                     label  = cms.untracked.string('AK8PFPuppi_pt')
-#                 ),
-#                 cms.PSet(
-#                     record = cms.string('JetResolutionScaleFactorRcd'),
-#                     tag    = cms.string('JR_'+JERera+'_SF_AK8PFPuppi'),
-#                     label  = cms.untracked.string('AK8PFPuppi')
-#                 ),
-#             ),
-#         )
-# 
-#         process.es_prefer_jer = cms.ESPrefer('PoolDBESSource', 'jer')
-# 
-#     # skip all jet smearing and uncertainties for data
-#     from TreeMaker.TreeMaker.JetDepot import JetDepot
-#     from TreeMaker.TreeMaker.addJetInfo import addJetInfo
-# 
-#     # AK4 jet uncertainties
-#     if self.geninfo and self.systematics:
-#         process, JetTagJECTmp, JetTagJECup, JetTagJECdown, JetTagJERup, JetTagJERdown, JetTag = self.JetVariations(process, JetTag, SkipTag)
-#     elif not self.geninfo:
-#         # get JEC unc for data
-#         process, JetTagJECTmp, _ = JetDepot(process,
-#             JetTag=JetTag,
-#             jecUncDir=0,
-#             storeJec=True, # get JEC unc value (in intermediate tag Tmp)
-#             doSmear=False,
-#         )
-#         # append unc to central collection
-#         process, JetTag = addJetInfo(process, JetTag, [JetTagJECTmp.value()], [])
-# 
-#     if self.geninfo:
-#         # finally, do central smearing and replace jet tag
-#         process, _, JetTag = JetDepot(process,
-#             JetTag=JetTag,
-#             jecUncDir=0,
-#             doSmear=True,
-#             jerUncDir=0,
-#             storeJer=2, # get central jet smearing factor
-#         )
-# 
-#     # get puppi-specific multiplicities
-#     from PhysicsTools.PatAlgos.patPuppiJetSpecificProducer_cfi import patPuppiJetSpecificProducer
-#     process.puppiSpecificAK8 = patPuppiJetSpecificProducer.clone(
-#         src = JetAK8Tag
-#     )
-#     # update userfloats (used for jet ID, including ID for JEC/JER variations)
-#     process, JetAK8Tag = addJetInfo(process, JetAK8Tag,
-#         ['puppiSpecificAK8:puppiMultiplicity','puppiSpecificAK8:neutralPuppiMultiplicity','puppiSpecificAK8:neutralHadronPuppiMultiplicity',
-#          'puppiSpecificAK8:photonPuppiMultiplicity','puppiSpecificAK8:HFHadronPuppiMultiplicity','puppiSpecificAK8:HFEMPuppiMultiplicity'])
-# 
-#     # AK8 jet uncertainties
-#     if self.geninfo and self.systematics:
-#         process, JetAK8TagJECTmp, JetAK8TagJECup, JetAK8TagJECdown, JetAK8TagJERup, JetAK8TagJERdown, JetAK8Tag = self.JetVariations(process, JetAK8Tag, SkipTag, suff="AK8", vars="makeJetVarsAK8")
-#     elif not self.geninfo:
-#         # get JEC unc for data
-#         process, JetAK8TagJECTmp, _ = JetDepot(process,
-#             JetTag=JetAK8Tag,
-#             jecUncDir=0,
-#             storeJec=True, # get JEC unc value (in intermediate tag Tmp)
-#             doSmear=False,
-#         )
-#         # append unc to central collection
-#         process, JetAK8Tag = addJetInfo(process, JetAK8Tag, [JetAK8TagJECTmp.value()], [])
-# 
-#     if self.geninfo:
-#         # finally, do central smearing and replace jet tag
-#         process, _, JetAK8Tag = JetDepot(process,
-#             JetTag=JetAK8Tag,
-#             jecUncDir=0,
-#             doSmear=True,
-#             jerUncDir=0,
-#             storeJer=2, # get central jet smearing factor
-#         )
+    SkipTag = cms.VInputTag(
+        cms.InputTag('LeptonsNew:IdIsoMuon'),
+        cms.InputTag('LeptonsNew:IdIsoElectron'),
+        cms.InputTag('IsolatedElectronTracksVeto'),
+        cms.InputTag('IsolatedMuonTracksVeto'),
+        cms.InputTag('IsolatedPionTracksVeto'),
+    )
+    
+    # get the JERs (disabled by default)
+    # this requires the user to download the .db file from this github
+    # https://github.com/cms-jet/JRDatabase
+    if len(self.jerfile)>0:
+        #get name of JERs without any directories
+        JERera = self.jerfile.split('/')[-1]
+        JERPatch = cms.string('sqlite_file:'+self.jerfile+'.db')
+    
+        process.jer = cms.ESSource("PoolDBESSource",CondDBSetup,
+            connect = JERPatch,
+            toGet = cms.VPSet(
+                cms.PSet(
+                    record = cms.string('JetResolutionRcd'),
+                    tag    = cms.string('JR_'+JERera+'_PtResolution_AK4PFchs'),
+                    label  = cms.untracked.string('AK4PFchs_pt')
+                ),
+                cms.PSet(
+                    record = cms.string('JetResolutionScaleFactorRcd'),
+                    tag    = cms.string('JR_'+JERera+'_SF_AK4PFchs'),
+                    label  = cms.untracked.string('AK4PFchs')
+                ),
+                cms.PSet(
+                    record = cms.string('JetResolutionRcd'),
+                    tag    = cms.string('JR_'+JERera+'_PtResolution_AK8PFPuppi'),
+                    label  = cms.untracked.string('AK8PFPuppi_pt')
+                ),
+                cms.PSet(
+                    record = cms.string('JetResolutionScaleFactorRcd'),
+                    tag    = cms.string('JR_'+JERera+'_SF_AK8PFPuppi'),
+                    label  = cms.untracked.string('AK8PFPuppi')
+                ),
+            ),
+        )
+
+        process.es_prefer_jer = cms.ESPrefer('PoolDBESSource', 'jer')
+
+    # skip all jet smearing and uncertainties for data
+    from TreeMaker.TreeMaker.JetDepot import JetDepot
+    from TreeMaker.TreeMaker.addJetInfo import addJetInfo
+
+    # AK4 jet uncertainties
+    if self.geninfo and self.systematics:
+        process, JetTagJECTmp, JetTagJECup, JetTagJECdown, JetTagJERup, JetTagJERdown, JetTag = self.JetVariations(process, JetTag, SkipTag)
+    elif not self.geninfo:
+        # get JEC unc for data
+        process, JetTagJECTmp, _ = JetDepot(process,
+            JetTag=JetTag,
+            jecUncDir=0,
+            storeJec=True, # get JEC unc value (in intermediate tag Tmp)
+            doSmear=False,
+        )
+        # append unc to central collection
+        process, JetTag = addJetInfo(process, JetTag, [JetTagJECTmp.value()], [])
+
+    if self.geninfo:
+        # finally, do central smearing and replace jet tag
+        process, _, JetTag = JetDepot(process,
+            JetTag=JetTag,
+            jecUncDir=0,
+            doSmear=True,
+            jerUncDir=0,
+            storeJer=2, # get central jet smearing factor
+        )
+
+    # get puppi-specific multiplicities
+    from PhysicsTools.PatAlgos.patPuppiJetSpecificProducer_cfi import patPuppiJetSpecificProducer
+    process.puppiSpecificAK8 = patPuppiJetSpecificProducer.clone(
+        src = JetAK8Tag
+    )
+    # update userfloats (used for jet ID, including ID for JEC/JER variations)
+    process, JetAK8Tag = addJetInfo(process, JetAK8Tag,
+        ['puppiSpecificAK8:puppiMultiplicity','puppiSpecificAK8:neutralPuppiMultiplicity','puppiSpecificAK8:neutralHadronPuppiMultiplicity',
+         'puppiSpecificAK8:photonPuppiMultiplicity','puppiSpecificAK8:HFHadronPuppiMultiplicity','puppiSpecificAK8:HFEMPuppiMultiplicity'])
+
+    # AK8 jet uncertainties
+    if self.geninfo and self.systematics:
+        process, JetAK8TagJECTmp, JetAK8TagJECup, JetAK8TagJECdown, JetAK8TagJERup, JetAK8TagJERdown, JetAK8Tag = self.JetVariations(process, JetAK8Tag, SkipTag, suff="AK8", vars="makeJetVarsAK8")
+    elif not self.geninfo:
+        # get JEC unc for data
+        process, JetAK8TagJECTmp, _ = JetDepot(process,
+            JetTag=JetAK8Tag,
+            jecUncDir=0,
+            storeJec=True, # get JEC unc value (in intermediate tag Tmp)
+            doSmear=False,
+        )
+        # append unc to central collection
+        process, JetAK8Tag = addJetInfo(process, JetAK8Tag, [JetAK8TagJECTmp.value()], [])
+
+    if self.geninfo:
+        # finally, do central smearing and replace jet tag
+        process, _, JetAK8Tag = JetDepot(process,
+            JetTag=JetAK8Tag,
+            jecUncDir=0,
+            doSmear=True,
+            jerUncDir=0,
+            storeJer=2, # get central jet smearing factor
+        )
         
     ## ----------------------------------------------------------------------------------------------
     ## Jet variables
     ## ----------------------------------------------------------------------------------------------
 
     # get updated QG training
-#     QGPatch = cms.string('sqlite_file:data/QGL_cmssw8020_v2.db')
-# 
-#     process.qgdb = cms.ESSource("PoolDBESSource",CondDBSetup,
-#         connect = QGPatch,
-#         toGet   = cms.VPSet(
-#             cms.PSet(
-#                 record = cms.string('QGLikelihoodRcd'),
-#                 tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs'),
-#                 label  = cms.untracked.string('QGL_AK4PFchs')
-#             ),
-#             cms.PSet(
-#                 record = cms.string('QGLikelihoodRcd'),
-#                 tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs_antib'),
-#                 label  = cms.untracked.string('QGL_AK4PFchs_antib')
-#             ),
-#         )
-#     )
-#     process.es_prefer_qg = cms.ESPrefer("PoolDBESSource","qgdb")
-#     
-#     # get QG tagging discriminant
-#     process.QGTagger = cms.EDProducer('QGTagger',
-#         srcJets             = JetTag,
-#         jetsLabel           = cms.string('QGL_AK4PFchs'),
-#         srcRho              = cms.InputTag('fixedGridRhoFastjetAll'),
-#         srcVertexCollection = cms.InputTag('offlinePrimaryVerticesWithBS'),
-#         useQualityCuts      = cms.bool(False)
-#     )
-#     
-#     # add userfloats & update tag
-#     process, JetTag = addJetInfo(process, JetTag, ['QGTagger:qgLikelihood','QGTagger:ptD', 'QGTagger:axis2', 'QGTagger:axis1'], ['QGTagger:mult'])
-#     
-#     process = self.makeJetVars(process,
-#         JetTag=JetTag,
-#         suff='',
-#         storeProperties=2,
-#         SkipTag=SkipTag,
-#         METfix=self.doMETfix,
-#     )
-#     if self.systematics:
-#         process.JetProperties.properties.extend(["jecUnc"])
-#         process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
-#         self.VectorDouble.extend([
-#             'JetProperties:jecUnc(Jets_jecUnc)',
-#         ])
-#     if self.geninfo and self.systematics:
-#         process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
-#         process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
-#         process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
-#         self.VectorDouble.extend([
-#             'JetProperties:jerFactorUp(Jets_jerFactorUp)',
-#             'JetProperties:jerFactorDown(Jets_jerFactorDown)',
-#         ])
-# 
-#     # get QG tagging discriminant for subjets
-#     process.QGTaggerSubjets = process.QGTagger.clone(
-#         srcJets = SubjetTag
-#     )
-#     
-#     # add userfloats & update subjet tag
-#     process, SubjetTag = addJetInfo(process, SubjetTag,
-#         ['QGTaggerSubjets:qgLikelihood','QGTaggerSubjets:ptD', 'QGTaggerSubjets:axis2', 'QGTaggerSubjets:axis1'], ['QGTaggerSubjets:mult'])
-#     # update subjets in jet coll
-#     JetAK8TagSJU = cms.InputTag(JetAK8Tag.value()+'SJUpdate')
-#     setattr(process, JetAK8TagSJU.value(),
-#         cms.EDProducer('SubjetUpdater',
-#             JetTag = JetAK8Tag,
-#             SubjetTag = SubjetTag,
-#             OldName = cms.string("SoftDropPuppi"),
-#             NewName = cms.string("SoftDropPuppiUpdated"),
-#         )
-#     )
-#     TMeras.TM80X.toModify(getattr(process, JetAK8TagSJU.value()), OldName = "SoftDrop")
-#     JetAK8Tag = JetAK8TagSJU
-#     
-#     # apply jet ID and get properties
-#     process = self.makeJetVarsAK8(process,
-#         JetTag=JetAK8Tag,
-#         suff='AK8',
-#         storeProperties=2,
-#         doECFs = not TMeras.TM80X.isChosen(), # temporarily disabled
-#     )
-#     TMeras.TM80X.toModify(process.JetPropertiesAK8,
-#         NsubjettinessTau1 = cms.vstring('NjettinessAK8Puppi94Xlike:tau1'),
-#         NsubjettinessTau2 = cms.vstring('NjettinessAK8Puppi94Xlike:tau2'),
-#         NsubjettinessTau3 = cms.vstring('NjettinessAK8Puppi94Xlike:tau3'),
-# #        ecfN2b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN2'),
-# #        ecfN2b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN2'),
-# #        ecfN3b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN3'),
-# #        ecfN3b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN3'),
-#         prunedMass = cms.vstring('ak8PFJetsPuppi94XlikePrunedMass'),
-#         softDropMass = cms.vstring('SoftDrop'),
-#         subjets = cms.vstring('SoftDrop'),
-#         SJbDiscriminatorCSV = cms.vstring('SoftDrop', 'pfCombinedInclusiveSecondaryVertexV2BJetTags'),
-#     )
-#     if self.systematics:
-#         process.JetPropertiesAK8.properties.extend(["jecUnc"])
-#         process.JetPropertiesAK8.jecUnc = cms.vstring(JetAK8TagJECTmp.value())
-#         self.VectorDouble.extend([
-#             'JetPropertiesAK8:jecUnc(JetsAK8_jecUnc)',
-#         ])
-#     if self.geninfo and self.systematics:
-#         process.JetPropertiesAK8.properties.extend(["jerFactorUp","jerFactorDown"])
-#         process.JetPropertiesAK8.jerFactorUp = cms.vstring(JetAK8TagJERup.value())
-#         process.JetPropertiesAK8.jerFactorDown = cms.vstring(JetAK8TagJERdown.value())
-#         self.VectorDouble.extend([
-#             'JetPropertiesAK8:jerFactorUp(JetsAK8_jerFactorUp)',
-#             'JetPropertiesAK8:jerFactorDown(JetsAK8_jerFactorDown)',
-#         ])
+    QGPatch = cms.string('sqlite_file:data/QGL_cmssw8020_v2.db')
+
+    process.qgdb = cms.ESSource("PoolDBESSource",CondDBSetup,
+        connect = QGPatch,
+        toGet   = cms.VPSet(
+            cms.PSet(
+                record = cms.string('QGLikelihoodRcd'),
+                tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs'),
+                label  = cms.untracked.string('QGL_AK4PFchs')
+            ),
+            cms.PSet(
+                record = cms.string('QGLikelihoodRcd'),
+                tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs_antib'),
+                label  = cms.untracked.string('QGL_AK4PFchs_antib')
+            ),
+        )
+    )
+    process.es_prefer_qg = cms.ESPrefer("PoolDBESSource","qgdb")
+    
+    # get QG tagging discriminant
+    process.QGTagger = cms.EDProducer('QGTagger',
+        srcJets             = JetTag,
+        jetsLabel           = cms.string('QGL_AK4PFchs'),
+        srcRho              = cms.InputTag('fixedGridRhoFastjetAll'),
+        srcVertexCollection = cms.InputTag('offlinePrimaryVerticesWithBS'),
+        useQualityCuts      = cms.bool(False)
+    )
+    
+    # add userfloats & update tag
+    process, JetTag = addJetInfo(process, JetTag, ['QGTagger:qgLikelihood','QGTagger:ptD', 'QGTagger:axis2', 'QGTagger:axis1'], ['QGTagger:mult'])
+    
+    process = self.makeJetVars(process,
+        JetTag=JetTag,
+        suff='',
+        storeProperties=2,
+        SkipTag=SkipTag,
+        METfix=self.doMETfix,
+    )
+    if self.systematics:
+        process.JetProperties.properties.extend(["jecUnc"])
+        process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
+        self.VectorDouble.extend([
+            'JetProperties:jecUnc(Jets_jecUnc)',
+        ])
+    if self.geninfo and self.systematics:
+        process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
+        process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
+        process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
+        self.VectorDouble.extend([
+            'JetProperties:jerFactorUp(Jets_jerFactorUp)',
+            'JetProperties:jerFactorDown(Jets_jerFactorDown)',
+        ])
+
+    # get QG tagging discriminant for subjets
+    process.QGTaggerSubjets = process.QGTagger.clone(
+        srcJets = SubjetTag
+    )
+    
+    # add userfloats & update subjet tag
+    process, SubjetTag = addJetInfo(process, SubjetTag,
+        ['QGTaggerSubjets:qgLikelihood','QGTaggerSubjets:ptD', 'QGTaggerSubjets:axis2', 'QGTaggerSubjets:axis1'], ['QGTaggerSubjets:mult'])
+    # update subjets in jet coll
+    JetAK8TagSJU = cms.InputTag(JetAK8Tag.value()+'SJUpdate')
+    setattr(process, JetAK8TagSJU.value(),
+        cms.EDProducer('SubjetUpdater',
+            JetTag = JetAK8Tag,
+            SubjetTag = SubjetTag,
+            OldName = cms.string("SoftDropPuppi"),
+            NewName = cms.string("SoftDropPuppiUpdated"),
+        )
+    )
+    TMeras.TM80X.toModify(getattr(process, JetAK8TagSJU.value()), OldName = "SoftDrop")
+    JetAK8Tag = JetAK8TagSJU
+    
+    # apply jet ID and get properties
+    process = self.makeJetVarsAK8(process,
+        JetTag=JetAK8Tag,
+        suff='AK8',
+        storeProperties=2,
+        doECFs = not TMeras.TM80X.isChosen(), # temporarily disabled
+    )
+    TMeras.TM80X.toModify(process.JetPropertiesAK8,
+        NsubjettinessTau1 = cms.vstring('NjettinessAK8Puppi94Xlike:tau1'),
+        NsubjettinessTau2 = cms.vstring('NjettinessAK8Puppi94Xlike:tau2'),
+        NsubjettinessTau3 = cms.vstring('NjettinessAK8Puppi94Xlike:tau3'),
+#        ecfN2b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN2'),
+#        ecfN2b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN2'),
+#        ecfN3b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN3'),
+#        ecfN3b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN3'),
+        prunedMass = cms.vstring('ak8PFJetsPuppi94XlikePrunedMass'),
+        softDropMass = cms.vstring('SoftDrop'),
+        subjets = cms.vstring('SoftDrop'),
+        SJbDiscriminatorCSV = cms.vstring('SoftDrop', 'pfCombinedInclusiveSecondaryVertexV2BJetTags'),
+    )
+    if self.systematics:
+        process.JetPropertiesAK8.properties.extend(["jecUnc"])
+        process.JetPropertiesAK8.jecUnc = cms.vstring(JetAK8TagJECTmp.value())
+        self.VectorDouble.extend([
+            'JetPropertiesAK8:jecUnc(JetsAK8_jecUnc)',
+        ])
+    if self.geninfo and self.systematics:
+        process.JetPropertiesAK8.properties.extend(["jerFactorUp","jerFactorDown"])
+        process.JetPropertiesAK8.jerFactorUp = cms.vstring(JetAK8TagJERup.value())
+        process.JetPropertiesAK8.jerFactorDown = cms.vstring(JetAK8TagJERdown.value())
+        self.VectorDouble.extend([
+            'JetPropertiesAK8:jerFactorUp(JetsAK8_jerFactorUp)',
+            'JetPropertiesAK8:jerFactorDown(JetsAK8_jerFactorDown)',
+        ])
 
     ## ----------------------------------------------------------------------------------------------
     ## GenJet variables
     ## ----------------------------------------------------------------------------------------------
-#     if self.geninfo:
-#         # store all genjets
-#         self.VectorRecoCand.extend ( [ 'slimmedGenJets(GenJets)' ] )
-#     
-#         from TreeMaker.Utils.subJetSelection_cfi import SubGenJetSelection
-#         
-#         process.GenHTJets = SubGenJetSelection.clone(
-#             JetTag = cms.InputTag('slimmedGenJets'),
-#             MinPt  = cms.double(30),
-#             MaxEta = cms.double(2.4),
-#         )
-#         self.VectorBool.extend(['GenHTJets:SubJetMask(GenJets_HTMask)'])
-#         
-#         # make gen HT
-#         from TreeMaker.Utils.htdouble_cfi import htdouble
-#         process.GenHT = htdouble.clone(
-#             JetTag = cms.InputTag("GenHTJets"),
-#         )
-#         self.VarsDouble.extend(['GenHT'])
-#         
-#         process.GenMHTJets = SubGenJetSelection.clone(
-#             JetTag = cms.InputTag('slimmedGenJets'),
-#             MinPt  = cms.double(30),
-#             MaxEta = cms.double(5.0),
-#         )
-#         self.VectorBool.extend(['GenMHTJets:SubJetMask(GenJets_MHTMask)'])
-#         
-#         # make gen MHT
-#         from TreeMaker.Utils.mhtdouble_cfi import mhtdouble
-#         process.GenMHT = mhtdouble.clone(
-#             JetTag  = cms.InputTag('GenMHTJets'),
-#         )
-#         self.VarsDouble.extend(['GenMHT:Pt(GenMHT)','GenMHT:Phi(GenMHTPhi)'])
-#     
-#         # substructure for genjets
-#         from RecoJets.Configuration.RecoGenJets_cff import ak8GenJetsNoNu
-#         from RecoJets.JetProducers.SubJetParameters_cfi import SubJetParameters
-#         process.ak8GenJetsPruned = ak8GenJetsNoNu.clone(
-#             SubJetParameters,
-#             usePruning = cms.bool(True),
-#             useExplicitGhosts = cms.bool(True),
-#             writeCompound = cms.bool(True),
-#             jetCollInstanceName=cms.string("SubJets"),
-#             jetPtMin = 170.,
-#             doAreaFastjet = cms.bool(False),
-#             src = cms.InputTag("packedGenParticles"),
-#         )
-#         process.ak8GenJetsSoftDrop = ak8GenJetsNoNu.clone(
-#             useSoftDrop = cms.bool(True),
-#             zcut = cms.double(0.1),
-#             beta = cms.double(0.0),
-#             R0   = cms.double(0.5),
-#             useExplicitGhosts = cms.bool(True),
-#             writeCompound = cms.bool(True),
-#             jetCollInstanceName=cms.string("SubJets"),
-#             jetPtMin = 170.,
-#             src = cms.InputTag("packedGenParticles"),
-#         )
-# 
-#         process.ak8GenJetProperties = cms.EDProducer("GenJetProperties",
-#             GenJetTag = cms.InputTag("slimmedGenJetsAK8"),
-#             PrunedGenJetTag = cms.InputTag("ak8GenJetsPruned"),
-#             SoftDropGenJetTag = cms.InputTag("ak8GenJetsSoftDrop"),
-#             distMax = cms.double(0.8),
-#             jetPtFilter = cms.double(150),
-#         )
-#         self.VectorDouble.extend([
-#             'ak8GenJetProperties:prunedMass(GenJetsAK8_prunedMass)',
-#             'ak8GenJetProperties:softDropMass(GenJetsAK8_softDropMass)',
-#         ])
-#         self.VectorInt.extend([
-#             'ak8GenJetProperties:multiplicity(GenJetsAK8_multiplicity)',
-#         ])
-#         # store AK8 genjets above pt cut
-#         self.VectorRecoCand.extend (['ak8GenJetProperties(GenJetsAK8)'])
+    if self.geninfo:
+        # store all genjets
+        self.VectorRecoCand.extend ( [ 'slimmedGenJets(GenJets)' ] )
+    
+        from TreeMaker.Utils.subJetSelection_cfi import SubGenJetSelection
+        
+        process.GenHTJets = SubGenJetSelection.clone(
+            JetTag = cms.InputTag('slimmedGenJets'),
+            MinPt  = cms.double(30),
+            MaxEta = cms.double(2.4),
+        )
+        self.VectorBool.extend(['GenHTJets:SubJetMask(GenJets_HTMask)'])
+        
+        # make gen HT
+        from TreeMaker.Utils.htdouble_cfi import htdouble
+        process.GenHT = htdouble.clone(
+            JetTag = cms.InputTag("GenHTJets"),
+        )
+        self.VarsDouble.extend(['GenHT'])
+        
+        process.GenMHTJets = SubGenJetSelection.clone(
+            JetTag = cms.InputTag('slimmedGenJets'),
+            MinPt  = cms.double(30),
+            MaxEta = cms.double(5.0),
+        )
+        self.VectorBool.extend(['GenMHTJets:SubJetMask(GenJets_MHTMask)'])
+        
+        # make gen MHT
+        from TreeMaker.Utils.mhtdouble_cfi import mhtdouble
+        process.GenMHT = mhtdouble.clone(
+            JetTag  = cms.InputTag('GenMHTJets'),
+        )
+        self.VarsDouble.extend(['GenMHT:Pt(GenMHT)','GenMHT:Phi(GenMHTPhi)'])
+    
+        # substructure for genjets
+        from RecoJets.Configuration.RecoGenJets_cff import ak8GenJetsNoNu
+        from RecoJets.JetProducers.SubJetParameters_cfi import SubJetParameters
+        process.ak8GenJetsPruned = ak8GenJetsNoNu.clone(
+            SubJetParameters,
+            usePruning = cms.bool(True),
+            useExplicitGhosts = cms.bool(True),
+            writeCompound = cms.bool(True),
+            jetCollInstanceName=cms.string("SubJets"),
+            jetPtMin = 170.,
+            doAreaFastjet = cms.bool(False),
+            src = cms.InputTag("packedGenParticles"),
+        )
+        process.ak8GenJetsSoftDrop = ak8GenJetsNoNu.clone(
+            useSoftDrop = cms.bool(True),
+            zcut = cms.double(0.1),
+            beta = cms.double(0.0),
+            R0   = cms.double(0.5),
+            useExplicitGhosts = cms.bool(True),
+            writeCompound = cms.bool(True),
+            jetCollInstanceName=cms.string("SubJets"),
+            jetPtMin = 170.,
+            src = cms.InputTag("packedGenParticles"),
+        )
+
+        process.ak8GenJetProperties = cms.EDProducer("GenJetProperties",
+            GenJetTag = cms.InputTag("slimmedGenJetsAK8"),
+            PrunedGenJetTag = cms.InputTag("ak8GenJetsPruned"),
+            SoftDropGenJetTag = cms.InputTag("ak8GenJetsSoftDrop"),
+            distMax = cms.double(0.8),
+            jetPtFilter = cms.double(150),
+        )
+        self.VectorDouble.extend([
+            'ak8GenJetProperties:prunedMass(GenJetsAK8_prunedMass)',
+            'ak8GenJetProperties:softDropMass(GenJetsAK8_softDropMass)',
+        ])
+        self.VectorInt.extend([
+            'ak8GenJetProperties:multiplicity(GenJetsAK8_multiplicity)',
+        ])
+        # store AK8 genjets above pt cut
+        self.VectorRecoCand.extend (['ak8GenJetProperties(GenJetsAK8)'])
 
     ## ----------------------------------------------------------------------------------------------
     ## Prefiring weights
     ## ----------------------------------------------------------------------------------------------
-#     from TreeMaker.Utils.L1ECALNonPrefiringProbProducer_cfi import L1ECALNonPrefiringProbProducer
-#     prefiringDataEra = cms.PSet(value = cms.string(""))
-#     TMeras.TM2016.toModify(prefiringDataEra, value = "2016BtoH")
-#     TMeras.TM2017.toModify(prefiringDataEra, value = "2017BtoF")
-#     if len(prefiringDataEra.value.value())>0:
-#         process.L1ECALNonPrefiringProbProducer = L1ECALNonPrefiringProbProducer.clone(
-#             TheJets = JetTag,
-#             DataEra = prefiringDataEra.value,
-#             L1Maps = cms.string('data/L1PrefiringMaps_new.root'),
-#         )
-#         self.VarsDouble.extend([
-#             'L1ECALNonPrefiringProbProducer:NonPrefiringProb',
-#             'L1ECALNonPrefiringProbProducer:NonPrefiringProbUp',
-#             'L1ECALNonPrefiringProbProducer:NonPrefiringProbDown',
-#         ])
+    from TreeMaker.Utils.L1ECALNonPrefiringProbProducer_cfi import L1ECALNonPrefiringProbProducer
+    prefiringDataEra = cms.PSet(value = cms.string(""))
+    TMeras.TM2016.toModify(prefiringDataEra, value = "2016BtoH")
+    TMeras.TM2017.toModify(prefiringDataEra, value = "2017BtoF")
+    if len(prefiringDataEra.value.value())>0:
+        process.L1ECALNonPrefiringProbProducer = L1ECALNonPrefiringProbProducer.clone(
+            TheJets = JetTag,
+            DataEra = prefiringDataEra.value,
+            L1Maps = cms.string('data/L1PrefiringMaps_new.root'),
+        )
+        self.VarsDouble.extend([
+            'L1ECALNonPrefiringProbProducer:NonPrefiringProb',
+            'L1ECALNonPrefiringProbProducer:NonPrefiringProbUp',
+            'L1ECALNonPrefiringProbProducer:NonPrefiringProbDown',
+        ])
 
     ## ----------------------------------------------------------------------------------------------
     ## Baseline filters
