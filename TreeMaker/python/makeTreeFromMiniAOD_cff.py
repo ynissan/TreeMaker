@@ -360,62 +360,62 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## IsoTracks
     ## ----------------------------------------------------------------------------------------------
-#     from TreeMaker.Utils.trackIsolationMaker_cfi import trackIsolationFilter
-# 
-#     process.IsolatedElectronTracksVeto = trackIsolationFilter.clone(
-#         doTrkIsoVeto        = False,
-#         vertexInputTag      = cms.InputTag("goodVertices"),
-#         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
-#         dR_ConeSize         = cms.double(0.3),
-#         dz_CutValue         = cms.double(0.1),
-#         minPt_PFCandidate   = cms.double(5.0),
-#         isoCut              = cms.double(0.2),
-#         pdgId               = cms.int32(11),
-#         mTCut               = cms.double(100.),
-#         METTag              = METTag,
-#     )
-# 
-#     process.IsolatedMuonTracksVeto = trackIsolationFilter.clone(
-#         doTrkIsoVeto        = False,
-#         vertexInputTag      = cms.InputTag("goodVertices"),
-#         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
-#         dR_ConeSize         = cms.double(0.3),
-#         dz_CutValue         = cms.double(0.1),
-#         minPt_PFCandidate   = cms.double(5.0),
-#         isoCut              = cms.double(0.2), 
-#         pdgId               = cms.int32(13),
-#         mTCut               = cms.double(100.),
-#         METTag              = METTag,
-#     )
-# 
-#     process.IsolatedPionTracksVeto = trackIsolationFilter.clone(
-#         doTrkIsoVeto        = False,
-#         vertexInputTag      = cms.InputTag("goodVertices"),
-#         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
-#         dR_ConeSize         = cms.double(0.3),
-#         dz_CutValue         = cms.double(0.1),
-#         minPt_PFCandidate   = cms.double(10.0),
-#         isoCut              = cms.double(0.1),
-#         pdgId               = cms.int32(211),
-#         mTCut               = cms.double(100.),
-#         METTag              = METTag,
-#     )
-# 
-#     self.VarsInt.extend(['IsolatedElectronTracksVeto:isoTracks(isoElectronTracks)'])
-#     self.VarsInt.extend(['IsolatedMuonTracksVeto:isoTracks(isoMuonTracks)'])
-#     self.VarsInt.extend(['IsolatedPionTracksVeto:isoTracks(isoPionTracks)'])
-# 
-#     if self.debugtracks:
-#         # NB: this increases the runtime and size of ntuples by ~10x
-#         # do not turn on unless you really want to save all the isotrack quantities!!!
-#         # just store the full set of isotrack quantities once
-#         process.IsolatedPionTracksVeto.debug = cms.bool(True)
-#         self.VectorTLorentzVector.extend(['IsolatedPionTracksVeto:pfcands(PFCands)'])
-#         self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandstrkiso(PFCands_trkiso)'])
-#         self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsdzpv(PFCands_dzpv)'])
-#         self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsmT(PFCands_mT)'])
-#         self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandschg(PFCands_charge)'])
-#         self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandsid(PFCands_id)'])
+    from TreeMaker.Utils.trackIsolationMaker_cfi import trackIsolationFilter
+
+    process.IsolatedElectronTracksVeto = trackIsolationFilter.clone(
+        doTrkIsoVeto        = False,
+        vertexInputTag      = cms.InputTag("goodVertices"),
+        pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
+        dR_ConeSize         = cms.double(0.3),
+        dz_CutValue         = cms.double(0.1),
+        minPt_PFCandidate   = cms.double(5.0),
+        isoCut              = cms.double(0.2),
+        pdgId               = cms.int32(11),
+        mTCut               = cms.double(100.),
+        METTag              = METTag,
+    )
+
+    process.IsolatedMuonTracksVeto = trackIsolationFilter.clone(
+        doTrkIsoVeto        = False,
+        vertexInputTag      = cms.InputTag("goodVertices"),
+        pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
+        dR_ConeSize         = cms.double(0.3),
+        dz_CutValue         = cms.double(0.1),
+        minPt_PFCandidate   = cms.double(5.0),
+        isoCut              = cms.double(0.2), 
+        pdgId               = cms.int32(13),
+        mTCut               = cms.double(100.),
+        METTag              = METTag,
+    )
+
+    process.IsolatedPionTracksVeto = trackIsolationFilter.clone(
+        doTrkIsoVeto        = False,
+        vertexInputTag      = cms.InputTag("goodVertices"),
+        pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
+        dR_ConeSize         = cms.double(0.3),
+        dz_CutValue         = cms.double(0.1),
+        minPt_PFCandidate   = cms.double(10.0),
+        isoCut              = cms.double(0.1),
+        pdgId               = cms.int32(211),
+        mTCut               = cms.double(100.),
+        METTag              = METTag,
+    )
+
+    self.VarsInt.extend(['IsolatedElectronTracksVeto:isoTracks(isoElectronTracks)'])
+    self.VarsInt.extend(['IsolatedMuonTracksVeto:isoTracks(isoMuonTracks)'])
+    self.VarsInt.extend(['IsolatedPionTracksVeto:isoTracks(isoPionTracks)'])
+
+    if self.debugtracks:
+        # NB: this increases the runtime and size of ntuples by ~10x
+        # do not turn on unless you really want to save all the isotrack quantities!!!
+        # just store the full set of isotrack quantities once
+        process.IsolatedPionTracksVeto.debug = cms.bool(True)
+        self.VectorTLorentzVector.extend(['IsolatedPionTracksVeto:pfcands(PFCands)'])
+        self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandstrkiso(PFCands_trkiso)'])
+        self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsdzpv(PFCands_dzpv)'])
+        self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsmT(PFCands_mT)'])
+        self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandschg(PFCands_charge)'])
+        self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandsid(PFCands_id)'])
 #     
     ## ----------------------------------------------------------------------------------------------
     ## Electrons/Muons
