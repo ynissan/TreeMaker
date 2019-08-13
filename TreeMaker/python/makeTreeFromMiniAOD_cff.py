@@ -793,95 +793,95 @@ def makeTreeFromMiniAOD(self,process):
 #     )
 #     process.es_prefer_qg = cms.ESPrefer("PoolDBESSource","qgdb")
 #     
-    # get QG tagging discriminant
-    process.QGTagger = cms.EDProducer('QGTagger',
-        srcJets             = JetTag,
-        jetsLabel           = cms.string('QGL_AK4PFchs'),
-        srcRho              = cms.InputTag('fixedGridRhoFastjetAll'),
-        srcVertexCollection = cms.InputTag('offlinePrimaryVerticesWithBS'),
-        useQualityCuts      = cms.bool(False)
-    )
-    
-    # add userfloats & update tag
-    process, JetTag = addJetInfo(process, JetTag, ['QGTagger:qgLikelihood','QGTagger:ptD', 'QGTagger:axis2', 'QGTagger:axis1'], ['QGTagger:mult'])
-    
-    process = self.makeJetVars(process,
-        JetTag=JetTag,
-        suff='',
-        storeProperties=2,
-        SkipTag=SkipTag,
-        METfix=self.doMETfix,
-    )
-    if self.systematics:
-        process.JetProperties.properties.extend(["jecUnc"])
-        process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
-        self.VectorDouble.extend([
-            'JetProperties:jecUnc(Jets_jecUnc)',
-        ])
-    if self.geninfo and self.systematics:
-        process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
-        process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
-        process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
-        self.VectorDouble.extend([
-            'JetProperties:jerFactorUp(Jets_jerFactorUp)',
-            'JetProperties:jerFactorDown(Jets_jerFactorDown)',
-        ])
-
-    # get QG tagging discriminant for subjets
-    process.QGTaggerSubjets = process.QGTagger.clone(
-        srcJets = SubjetTag
-    )
-    
-    # add userfloats & update subjet tag
-    process, SubjetTag = addJetInfo(process, SubjetTag,
-        ['QGTaggerSubjets:qgLikelihood','QGTaggerSubjets:ptD', 'QGTaggerSubjets:axis2', 'QGTaggerSubjets:axis1'], ['QGTaggerSubjets:mult'])
-    # update subjets in jet coll
-    JetAK8TagSJU = cms.InputTag(JetAK8Tag.value()+'SJUpdate')
-    setattr(process, JetAK8TagSJU.value(),
-        cms.EDProducer('SubjetUpdater',
-            JetTag = JetAK8Tag,
-            SubjetTag = SubjetTag,
-            OldName = cms.string("SoftDropPuppi"),
-            NewName = cms.string("SoftDropPuppiUpdated"),
-        )
-    )
-    TMeras.TM80X.toModify(getattr(process, JetAK8TagSJU.value()), OldName = "SoftDrop")
-    JetAK8Tag = JetAK8TagSJU
-    
-    # apply jet ID and get properties
-    process = self.makeJetVarsAK8(process,
-        JetTag=JetAK8Tag,
-        suff='AK8',
-        storeProperties=2,
-        doECFs = not TMeras.TM80X.isChosen(), # temporarily disabled
-    )
-    TMeras.TM80X.toModify(process.JetPropertiesAK8,
-        NsubjettinessTau1 = cms.vstring('NjettinessAK8Puppi94Xlike:tau1'),
-        NsubjettinessTau2 = cms.vstring('NjettinessAK8Puppi94Xlike:tau2'),
-        NsubjettinessTau3 = cms.vstring('NjettinessAK8Puppi94Xlike:tau3'),
-#        ecfN2b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN2'),
-#        ecfN2b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN2'),
-#        ecfN3b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN3'),
-#        ecfN3b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN3'),
-        prunedMass = cms.vstring('ak8PFJetsPuppi94XlikePrunedMass'),
-        softDropMass = cms.vstring('SoftDrop'),
-        subjets = cms.vstring('SoftDrop'),
-        SJbDiscriminatorCSV = cms.vstring('SoftDrop', 'pfCombinedInclusiveSecondaryVertexV2BJetTags'),
-    )
-    if self.systematics:
-        process.JetPropertiesAK8.properties.extend(["jecUnc"])
-        process.JetPropertiesAK8.jecUnc = cms.vstring(JetAK8TagJECTmp.value())
-        self.VectorDouble.extend([
-            'JetPropertiesAK8:jecUnc(JetsAK8_jecUnc)',
-        ])
-    if self.geninfo and self.systematics:
-        process.JetPropertiesAK8.properties.extend(["jerFactorUp","jerFactorDown"])
-        process.JetPropertiesAK8.jerFactorUp = cms.vstring(JetAK8TagJERup.value())
-        process.JetPropertiesAK8.jerFactorDown = cms.vstring(JetAK8TagJERdown.value())
-        self.VectorDouble.extend([
-            'JetPropertiesAK8:jerFactorUp(JetsAK8_jerFactorUp)',
-            'JetPropertiesAK8:jerFactorDown(JetsAK8_jerFactorDown)',
-        ])
+#     # get QG tagging discriminant
+#     process.QGTagger = cms.EDProducer('QGTagger',
+#         srcJets             = JetTag,
+#         jetsLabel           = cms.string('QGL_AK4PFchs'),
+#         srcRho              = cms.InputTag('fixedGridRhoFastjetAll'),
+#         srcVertexCollection = cms.InputTag('offlinePrimaryVerticesWithBS'),
+#         useQualityCuts      = cms.bool(False)
+#     )
+#     
+#     # add userfloats & update tag
+#     process, JetTag = addJetInfo(process, JetTag, ['QGTagger:qgLikelihood','QGTagger:ptD', 'QGTagger:axis2', 'QGTagger:axis1'], ['QGTagger:mult'])
+#     
+#     process = self.makeJetVars(process,
+#         JetTag=JetTag,
+#         suff='',
+#         storeProperties=2,
+#         SkipTag=SkipTag,
+#         METfix=self.doMETfix,
+#     )
+#     if self.systematics:
+#         process.JetProperties.properties.extend(["jecUnc"])
+#         process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
+#         self.VectorDouble.extend([
+#             'JetProperties:jecUnc(Jets_jecUnc)',
+#         ])
+#     if self.geninfo and self.systematics:
+#         process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
+#         process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
+#         process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
+#         self.VectorDouble.extend([
+#             'JetProperties:jerFactorUp(Jets_jerFactorUp)',
+#             'JetProperties:jerFactorDown(Jets_jerFactorDown)',
+#         ])
+# 
+#     # get QG tagging discriminant for subjets
+#     process.QGTaggerSubjets = process.QGTagger.clone(
+#         srcJets = SubjetTag
+#     )
+#     
+#     # add userfloats & update subjet tag
+#     process, SubjetTag = addJetInfo(process, SubjetTag,
+#         ['QGTaggerSubjets:qgLikelihood','QGTaggerSubjets:ptD', 'QGTaggerSubjets:axis2', 'QGTaggerSubjets:axis1'], ['QGTaggerSubjets:mult'])
+#     # update subjets in jet coll
+#     JetAK8TagSJU = cms.InputTag(JetAK8Tag.value()+'SJUpdate')
+#     setattr(process, JetAK8TagSJU.value(),
+#         cms.EDProducer('SubjetUpdater',
+#             JetTag = JetAK8Tag,
+#             SubjetTag = SubjetTag,
+#             OldName = cms.string("SoftDropPuppi"),
+#             NewName = cms.string("SoftDropPuppiUpdated"),
+#         )
+#     )
+#     TMeras.TM80X.toModify(getattr(process, JetAK8TagSJU.value()), OldName = "SoftDrop")
+#     JetAK8Tag = JetAK8TagSJU
+#     
+#     # apply jet ID and get properties
+#     process = self.makeJetVarsAK8(process,
+#         JetTag=JetAK8Tag,
+#         suff='AK8',
+#         storeProperties=2,
+#         doECFs = not TMeras.TM80X.isChosen(), # temporarily disabled
+#     )
+#     TMeras.TM80X.toModify(process.JetPropertiesAK8,
+#         NsubjettinessTau1 = cms.vstring('NjettinessAK8Puppi94Xlike:tau1'),
+#         NsubjettinessTau2 = cms.vstring('NjettinessAK8Puppi94Xlike:tau2'),
+#         NsubjettinessTau3 = cms.vstring('NjettinessAK8Puppi94Xlike:tau3'),
+# #        ecfN2b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN2'),
+# #        ecfN2b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN2'),
+# #        ecfN3b1 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb1AK8Puppi94XlikeSoftDropN3'),
+# #        ecfN3b2 = cms.vstring('ak8PFJetsPuppi94XlikeSoftDropValueMap:nb2AK8Puppi94XlikeSoftDropN3'),
+#         prunedMass = cms.vstring('ak8PFJetsPuppi94XlikePrunedMass'),
+#         softDropMass = cms.vstring('SoftDrop'),
+#         subjets = cms.vstring('SoftDrop'),
+#         SJbDiscriminatorCSV = cms.vstring('SoftDrop', 'pfCombinedInclusiveSecondaryVertexV2BJetTags'),
+#     )
+#     if self.systematics:
+#         process.JetPropertiesAK8.properties.extend(["jecUnc"])
+#         process.JetPropertiesAK8.jecUnc = cms.vstring(JetAK8TagJECTmp.value())
+#         self.VectorDouble.extend([
+#             'JetPropertiesAK8:jecUnc(JetsAK8_jecUnc)',
+#         ])
+#     if self.geninfo and self.systematics:
+#         process.JetPropertiesAK8.properties.extend(["jerFactorUp","jerFactorDown"])
+#         process.JetPropertiesAK8.jerFactorUp = cms.vstring(JetAK8TagJERup.value())
+#         process.JetPropertiesAK8.jerFactorDown = cms.vstring(JetAK8TagJERdown.value())
+#         self.VectorDouble.extend([
+#             'JetPropertiesAK8:jerFactorUp(JetsAK8_jerFactorUp)',
+#             'JetPropertiesAK8:jerFactorDown(JetsAK8_jerFactorDown)',
+#         ])
 
     ## ----------------------------------------------------------------------------------------------
     ## GenJet variables
