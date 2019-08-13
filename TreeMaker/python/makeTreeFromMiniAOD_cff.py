@@ -198,164 +198,164 @@ def makeTreeFromMiniAOD(self,process):
     ## JECs
     ## ----------------------------------------------------------------------------------------------
 
-#     default miniAOD tags
-#     JetTag = cms.InputTag("slimmedJets")
-#     METTag = cms.InputTag('slimmedMETs')
-#     get rid of the pointless low-pt AK8 jets ASAP
-#     also get rid of jets w/ inf constituents (CutParser doesn't support isinf or bitwise operations, so use this hack)
-#     process.slimmedJetsAK8Good = cms.EDFilter("PATJetSelector",
-#         src = cms.InputTag("slimmedJetsAK8"),
-#         cut = cms.string("isPFJet && abs(daughter(0).energy)!=exp(1000)"),
-#     )
-#     JetAK8Tag = cms.InputTag('slimmedJetsAK8Good')
-#     process.slimmedJetsAK8Inf = cms.EDFilter("PATJetSelector",
-#         src = cms.InputTag("slimmedJetsAK8"),
-#         cut = cms.string("isPFJet && abs(daughter(0).energy)==exp(1000)"),
-#     )
-#     JetAK8TagInf = cms.InputTag('slimmedJetsAK8Inf')
-#     SubjetTag = cms.InputTag('slimmedJetsAK8PFPuppiSoftDropPacked:SubJets')
-# 
-#     process.load("CondCore.DBCommon.CondDBCommon_cfi")
-#     from CondCore.DBCommon.CondDBSetup_cfi import CondDBSetup
-#     
-#     get the JECs (disabled by default)
-#     this requires the user to download the .db file from this twiki
-#     https://twiki.cern.ch/twiki/bin/viewauth/CMS/JECDataMC
-#     if len(self.jecfile)>0:
-#         get name of JECs without any directories
-#         JECera = self.jecfile.split('/')[-1]
-#         JECPatch = cms.string('sqlite_file:'+self.jecfile+'.db')
-# 
-#         process.jec = cms.ESSource("PoolDBESSource",CondDBSetup,
-#             connect = JECPatch,
-#             toGet   = cms.VPSet(
-#                 cms.PSet(
-#                     record = cms.string("JetCorrectionsRecord"),
-#                     tag    = cms.string("JetCorrectorParametersCollection_"+JECera+"_AK4PFchs"),
-#                     label  = cms.untracked.string("AK4PFchs")
-#                 ),
-#                 cms.PSet(
-#                     record = cms.string("JetCorrectionsRecord"),
-#                     tag    = cms.string("JetCorrectorParametersCollection_"+JECera+"_AK8PFPuppi"),
-#                     label  = cms.untracked.string("AK8PFPuppi")
-#                 ),
-#             )
-#         )
-#         process.es_prefer_jec = cms.ESPrefer("PoolDBESSource","jec")
-#         
-#         levels  = ['L1FastJet','L2Relative','L3Absolute']
-#         if self.residual: levels.append('L2L3Residual')
-#         
-#         from TreeMaker.TreeMaker.TMEras import TMeras
-#         from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
-#         
-#         rerun DeepCSV on AK4 jets for 2016 80X MC
-#         ak4updates = cms.PSet(discrs = cms.vstring())
-#         TMeras.TM80X.toModify(ak4updates,
-#             discrs = cms.vstring(
-#                 ['pfDeepCSVJetTags:'+x for x in ['probb','probc','probudsg','probbb']] +
-#                 ['pfDeepCSVDiscriminatorsJetTags:'+x for x in ['BvsAll','CvsB','CvsL']]
-#             )
-#         )
-# 
-#         updateJetCollection(
-#             process,
-#             jetSource = JetTag,
-#             postfix = 'UpdatedJEC',
-#             jetCorrections = ('AK4PFchs', levels, 'None'),
-#             btagDiscriminators = ak4updates.discrs.value() if len(ak4updates.discrs.value())>0 else ['None'],
-#             printWarning = bool(self.verbose),
-#         )
-#         
-#         JetTag = cms.InputTag('updatedPatJetsUpdatedJEC' if len(ak4updates.discrs.value())==0 else 'updatedPatJetsTransientCorrectedUpdatedJEC')
-#         
-#         select double b-tagger
-#         ak8updates = []
-#         ak8updates.append("pfBoostedDoubleSecondaryVertexAK8BJetTags")
-# 
-#         if self.deepAK8:
-#             ak8updates.extend(["pfDeepBoostedDiscriminatorsJetTags:"+x for x in ["TvsQCD","WvsQCD","ZvsQCD","HbbvsQCD"]])
-#             ak8updates.extend(["pfMassDecorrelatedDeepBoostedDiscriminatorsJetTags:"+x for x in ["TvsQCD","WvsQCD","ZHbbvsQCD"]])
-# 
-#         if self.deepDoubleB:
-#             ak8updates.extend(['pfDeepDoubleBJetTags:'+x for x in ['probQ','probH']])
-# 
-#         if TMeras.TM80X.isChosen():
-#             use jet toolbox to rerun puppi, recluster AK8 jets, and compute substructure variables
-#             do not add discriminators here, several issues
-#             from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
-#             jetToolbox(process,
-#                 'ak8',
-#                 'jetSequence',
-#                 'out',
-#                 PUMethod = 'Puppi',
-#                 miniAOD = True,
-#                 runOnMC = self.geninfo,
-#                 postFix = '94Xlike',
-#                 Cut = 'pt>170.',
-#                 addPruning = True,
-#                 addSoftDropSubjets = True,
-#                 addNsub = True,
-#                 maxTau = 3,
-#                 subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
-#                 JETCorrLevels = levels,
-#                 subJETCorrLevels = levels,
-#                 addEnergyCorrFunc = False,
-#                 associateTask = False,
-#                 verbosity = 2 if self.verbose else 0,
-#             )
-# 
-#             JetAK8Tag = cms.InputTag("packedPatJetsAK8PFPuppi94XlikeSoftDrop")
-#             SubjetTag = cms.InputTag("selectedPatJetsAK8PFPuppi94XlikeSoftDropPacked:SubJets")
-# 
-#         update the corrections for AK8 jets
-#         and add any extra discriminators
-#         updateJetCollection(
-#             process,
-#             jetSource = JetAK8Tag,
-#             labelName = 'AK8',
-#             postfix = 'UpdatedJEC',
-#             jetCorrections = ('AK8PFPuppi', levels, 'None'),
-#             pvSource = cms.InputTag('offlineSlimmedPrimaryVertices'),
-#             svSource = cms.InputTag('slimmedSecondaryVertices'),
-#             rParam = 0.8,
-#             btagDiscriminators = ak8updates if len(ak8updates)>0 else ['None'],
-#             printWarning = bool(self.verbose),
-#         )
-#         
-#         remove pt cut to avoid default values for some jets
-#         if self.deepAK8:
-#             process.pfDeepBoostedJetTagInfosAK8UpdatedJEC.min_jet_pt = cms.double(0)
-# 
-#         JetAK8Tag = cms.InputTag('updatedPatJetsTransientCorrectedAK8UpdatedJEC')
-#         
-#         update the MET to account for the new JECs
-#         from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMetCorAndUncFromMiniAOD
-#         runMetCorAndUncFromMiniAOD(
-#             process,
-#             isData=not self.geninfo, # controls gen met
-#             jetCollUnskimmed=JetTag,
-#             reapplyJEC=False,
-#             fixEE2017=self.doMETfix,
-#         )
-#         METTag = cms.InputTag('slimmedMETs','',process.name_())
-# 
-#         additional run to keep orig values
-#         if self.doMETfix:
-#             runMetCorAndUncFromMiniAOD(
-#                 process,
-#                 isData=not self.geninfo, # controls gen met
-#                 jetCollUnskimmed=JetTag,
-#                 reapplyJEC=False,
-#                 postfix="Orig",
-#                 computeMETSignificance=False,
-#             )
-#             METTagOrig = cms.InputTag('slimmedMETsOrig')
-#         else:
-#             METTagOrig = None
-# 
-#     keep jets before any further modifications for hadtau
-#     JetTagBeforeSmearing = JetTag
+#    default miniAOD tags
+    JetTag = cms.InputTag("slimmedJets")
+    METTag = cms.InputTag('slimmedMETs')
+    #get rid of the pointless low-pt AK8 jets ASAP
+    #also get rid of jets w/ inf constituents (CutParser doesn't support isinf or bitwise operations, so use this hack)
+    process.slimmedJetsAK8Good = cms.EDFilter("PATJetSelector",
+        src = cms.InputTag("slimmedJetsAK8"),
+        cut = cms.string("isPFJet && abs(daughter(0).energy)!=exp(1000)"),
+    )
+    JetAK8Tag = cms.InputTag('slimmedJetsAK8Good')
+    process.slimmedJetsAK8Inf = cms.EDFilter("PATJetSelector",
+        src = cms.InputTag("slimmedJetsAK8"),
+        cut = cms.string("isPFJet && abs(daughter(0).energy)==exp(1000)"),
+    )
+    JetAK8TagInf = cms.InputTag('slimmedJetsAK8Inf')
+    SubjetTag = cms.InputTag('slimmedJetsAK8PFPuppiSoftDropPacked:SubJets')
+
+    process.load("CondCore.DBCommon.CondDBCommon_cfi")
+    from CondCore.DBCommon.CondDBSetup_cfi import CondDBSetup
+    
+#    get the JECs (disabled by default)
+#    this requires the user to download the .db file from this twiki
+#    https://twiki.cern.ch/twiki/bin/viewauth/CMS/JECDataMC
+    if len(self.jecfile)>0:
+#        get name of JECs without any directories
+        JECera = self.jecfile.split('/')[-1]
+        JECPatch = cms.string('sqlite_file:'+self.jecfile+'.db')
+
+        process.jec = cms.ESSource("PoolDBESSource",CondDBSetup,
+            connect = JECPatch,
+            toGet   = cms.VPSet(
+                cms.PSet(
+                    record = cms.string("JetCorrectionsRecord"),
+                    tag    = cms.string("JetCorrectorParametersCollection_"+JECera+"_AK4PFchs"),
+                    label  = cms.untracked.string("AK4PFchs")
+                ),
+                cms.PSet(
+                    record = cms.string("JetCorrectionsRecord"),
+                    tag    = cms.string("JetCorrectorParametersCollection_"+JECera+"_AK8PFPuppi"),
+                    label  = cms.untracked.string("AK8PFPuppi")
+                ),
+            )
+        )
+        process.es_prefer_jec = cms.ESPrefer("PoolDBESSource","jec")
+        
+        levels  = ['L1FastJet','L2Relative','L3Absolute']
+        if self.residual: levels.append('L2L3Residual')
+        
+        from TreeMaker.TreeMaker.TMEras import TMeras
+        from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
+        
+#        rerun DeepCSV on AK4 jets for 2016 80X MC
+        ak4updates = cms.PSet(discrs = cms.vstring())
+        TMeras.TM80X.toModify(ak4updates,
+            discrs = cms.vstring(
+                ['pfDeepCSVJetTags:'+x for x in ['probb','probc','probudsg','probbb']] +
+                ['pfDeepCSVDiscriminatorsJetTags:'+x for x in ['BvsAll','CvsB','CvsL']]
+            )
+        )
+
+        updateJetCollection(
+            process,
+            jetSource = JetTag,
+            postfix = 'UpdatedJEC',
+            jetCorrections = ('AK4PFchs', levels, 'None'),
+            btagDiscriminators = ak4updates.discrs.value() if len(ak4updates.discrs.value())>0 else ['None'],
+            printWarning = bool(self.verbose),
+        )
+        
+        JetTag = cms.InputTag('updatedPatJetsUpdatedJEC' if len(ak4updates.discrs.value())==0 else 'updatedPatJetsTransientCorrectedUpdatedJEC')
+        
+#        select double b-tagger
+        ak8updates = []
+        ak8updates.append("pfBoostedDoubleSecondaryVertexAK8BJetTags")
+
+        if self.deepAK8:
+            ak8updates.extend(["pfDeepBoostedDiscriminatorsJetTags:"+x for x in ["TvsQCD","WvsQCD","ZvsQCD","HbbvsQCD"]])
+            ak8updates.extend(["pfMassDecorrelatedDeepBoostedDiscriminatorsJetTags:"+x for x in ["TvsQCD","WvsQCD","ZHbbvsQCD"]])
+
+        if self.deepDoubleB:
+            ak8updates.extend(['pfDeepDoubleBJetTags:'+x for x in ['probQ','probH']])
+
+        if TMeras.TM80X.isChosen():
+#            use jet toolbox to rerun puppi, recluster AK8 jets, and compute substructure variables
+#            do not add discriminators here, several issues
+            from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
+            jetToolbox(process,
+                'ak8',
+                'jetSequence',
+                'out',
+                PUMethod = 'Puppi',
+                miniAOD = True,
+                runOnMC = self.geninfo,
+                postFix = '94Xlike',
+                Cut = 'pt>170.',
+                addPruning = True,
+                addSoftDropSubjets = True,
+                addNsub = True,
+                maxTau = 3,
+                subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
+                JETCorrLevels = levels,
+                subJETCorrLevels = levels,
+                addEnergyCorrFunc = False,
+                associateTask = False,
+                verbosity = 2 if self.verbose else 0,
+            )
+
+            JetAK8Tag = cms.InputTag("packedPatJetsAK8PFPuppi94XlikeSoftDrop")
+            SubjetTag = cms.InputTag("selectedPatJetsAK8PFPuppi94XlikeSoftDropPacked:SubJets")
+
+#        update the corrections for AK8 jets
+#        and add any extra discriminators
+        updateJetCollection(
+            process,
+            jetSource = JetAK8Tag,
+            labelName = 'AK8',
+            postfix = 'UpdatedJEC',
+            jetCorrections = ('AK8PFPuppi', levels, 'None'),
+            pvSource = cms.InputTag('offlineSlimmedPrimaryVertices'),
+            svSource = cms.InputTag('slimmedSecondaryVertices'),
+            rParam = 0.8,
+            btagDiscriminators = ak8updates if len(ak8updates)>0 else ['None'],
+            printWarning = bool(self.verbose),
+        )
+        
+#        remove pt cut to avoid default values for some jets
+        if self.deepAK8:
+            process.pfDeepBoostedJetTagInfosAK8UpdatedJEC.min_jet_pt = cms.double(0)
+
+        JetAK8Tag = cms.InputTag('updatedPatJetsTransientCorrectedAK8UpdatedJEC')
+        
+#        update the MET to account for the new JECs
+        from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMetCorAndUncFromMiniAOD
+        runMetCorAndUncFromMiniAOD(
+            process,
+            isData=not self.geninfo, # controls gen met
+            jetCollUnskimmed=JetTag,
+            reapplyJEC=False,
+            fixEE2017=self.doMETfix,
+        )
+        METTag = cms.InputTag('slimmedMETs','',process.name_())
+
+#        additional run to keep orig values
+        if self.doMETfix:
+            runMetCorAndUncFromMiniAOD(
+                process,
+                isData=not self.geninfo, # controls gen met
+                jetCollUnskimmed=JetTag,
+                reapplyJEC=False,
+                postfix="Orig",
+                computeMETSignificance=False,
+            )
+            METTagOrig = cms.InputTag('slimmedMETsOrig')
+        else:
+            METTagOrig = None
+
+#    keep jets before any further modifications for hadtau
+    JetTagBeforeSmearing = JetTag
 
     ## ----------------------------------------------------------------------------------------------
     ## IsoTracks
