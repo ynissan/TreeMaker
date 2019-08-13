@@ -624,38 +624,38 @@ def makeTreeFromMiniAOD(self,process):
     # If the version number of the input trigger name is omitted,
     # any matching trigger will be included (default behavior)
 
-    from TreeMaker.Utils.triggerproducer_cfi import triggerProducer
-    from TreeMaker.TreeMaker.triggerNameList import triggerNameList as _triggerNameList
-    process.TriggerProducer = triggerProducer.clone(
-        trigTagArg1     = cms.string('TriggerResults'),
-        trigTagArg2     = cms.string(''),
-        trigTagArg3     = cms.string(self.hlttagname),
-        prescaleTagArg1  = cms.string('patTrigger'),
-        prescaleTagArg2  = cms.string(''),
-        prescaleTagArg3  = cms.string(''),
-        saveHLTObj = cms.bool(False),
-        triggerNameList = _triggerNameList
-    )
-    self.VectorInt.extend(['TriggerProducer:TriggerPass','TriggerProducer:TriggerPrescales','TriggerProducer:TriggerVersion'])
-    self.VectorString.extend(['TriggerProducer:TriggerNames'])
-    if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0]:
-        process.TriggerProducer.saveHLTObj = cms.bool(True)
-        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
-        process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
-        self.VectorTLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
-    elif "SingleMuon" in process.source.fileNames[0]:
-        process.TriggerProducer.saveHLTObj = cms.bool(True)
-        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Mu50_v")
-        process.TriggerProducer.saveHLTObjName = cms.string("HLTMuonObjects")
-        self.VectorTLorentzVector.extend(['TriggerProducer:HLTMuonObjects'])
-
-    if not self.geninfo:
-        from TreeMaker.Utils.prescaleweightproducer_cfi import prescaleweightProducer
-        process.PrescaleWeightProducer = prescaleweightProducer.clone()
-        process.PrescaleWeightProducer.bits.setProcessName(self.hlttagname)
-        self.VarsDouble.extend(['PrescaleWeightProducer:weight(PrescaleWeightHT)'])
-        self.VarsDouble.extend(['PrescaleWeightProducer:ht(HTOnline)'])
-        self.VarsDouble.extend(['PrescaleWeightProducer:mht(MHTOnline)'])
+#     from TreeMaker.Utils.triggerproducer_cfi import triggerProducer
+#     from TreeMaker.TreeMaker.triggerNameList import triggerNameList as _triggerNameList
+#     process.TriggerProducer = triggerProducer.clone(
+#         trigTagArg1     = cms.string('TriggerResults'),
+#         trigTagArg2     = cms.string(''),
+#         trigTagArg3     = cms.string(self.hlttagname),
+#         prescaleTagArg1  = cms.string('patTrigger'),
+#         prescaleTagArg2  = cms.string(''),
+#         prescaleTagArg3  = cms.string(''),
+#         saveHLTObj = cms.bool(False),
+#         triggerNameList = _triggerNameList
+#     )
+#     self.VectorInt.extend(['TriggerProducer:TriggerPass','TriggerProducer:TriggerPrescales','TriggerProducer:TriggerVersion'])
+#     self.VectorString.extend(['TriggerProducer:TriggerNames'])
+#     if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0]:
+#         process.TriggerProducer.saveHLTObj = cms.bool(True)
+#         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
+#         process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
+#         self.VectorTLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
+#     elif "SingleMuon" in process.source.fileNames[0]:
+#         process.TriggerProducer.saveHLTObj = cms.bool(True)
+#         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Mu50_v")
+#         process.TriggerProducer.saveHLTObjName = cms.string("HLTMuonObjects")
+#         self.VectorTLorentzVector.extend(['TriggerProducer:HLTMuonObjects'])
+# 
+#     if not self.geninfo:
+#         from TreeMaker.Utils.prescaleweightproducer_cfi import prescaleweightProducer
+#         process.PrescaleWeightProducer = prescaleweightProducer.clone()
+#         process.PrescaleWeightProducer.bits.setProcessName(self.hlttagname)
+#         self.VarsDouble.extend(['PrescaleWeightProducer:weight(PrescaleWeightHT)'])
+#         self.VarsDouble.extend(['PrescaleWeightProducer:ht(HTOnline)'])
+#         self.VarsDouble.extend(['PrescaleWeightProducer:mht(MHTOnline)'])
 
     
     ## ----------------------------------------------------------------------------------------------
@@ -774,25 +774,25 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
 
     # get updated QG training
-    QGPatch = cms.string('sqlite_file:data/QGL_cmssw8020_v2.db')
-
-    process.qgdb = cms.ESSource("PoolDBESSource",CondDBSetup,
-        connect = QGPatch,
-        toGet   = cms.VPSet(
-            cms.PSet(
-                record = cms.string('QGLikelihoodRcd'),
-                tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs'),
-                label  = cms.untracked.string('QGL_AK4PFchs')
-            ),
-            cms.PSet(
-                record = cms.string('QGLikelihoodRcd'),
-                tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs_antib'),
-                label  = cms.untracked.string('QGL_AK4PFchs_antib')
-            ),
-        )
-    )
-    process.es_prefer_qg = cms.ESPrefer("PoolDBESSource","qgdb")
-    
+    # QGPatch = cms.string('sqlite_file:data/QGL_cmssw8020_v2.db')
+# 
+#     process.qgdb = cms.ESSource("PoolDBESSource",CondDBSetup,
+#         connect = QGPatch,
+#         toGet   = cms.VPSet(
+#             cms.PSet(
+#                 record = cms.string('QGLikelihoodRcd'),
+#                 tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs'),
+#                 label  = cms.untracked.string('QGL_AK4PFchs')
+#             ),
+#             cms.PSet(
+#                 record = cms.string('QGLikelihoodRcd'),
+#                 tag    = cms.string('QGLikelihoodObject_cmssw8020_v2_AK4PFchs_antib'),
+#                 label  = cms.untracked.string('QGL_AK4PFchs_antib')
+#             ),
+#         )
+#     )
+#     process.es_prefer_qg = cms.ESPrefer("PoolDBESSource","qgdb")
+#     
     # get QG tagging discriminant
     process.QGTagger = cms.EDProducer('QGTagger',
         srcJets             = JetTag,
