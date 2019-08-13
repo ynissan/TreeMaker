@@ -1002,36 +1002,36 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## MET
     ## ----------------------------------------------------------------------------------------------
-    # from TreeMaker.Utils.metdouble_cfi import metdouble
-#     process.MET = metdouble.clone(
-#         METTag = METTag,
-#         GenMETTag = cms.InputTag("slimmedMETs","",self.tagname), #original collection used deliberately here
-#         JetTag = cms.InputTag('HTJets'),
-#         geninfo = cms.untracked.bool(self.geninfo),
-#         InfTagAK8 = JetAK8TagInf,
-#     )
-#     self.VarsDouble.extend(['MET:Pt(MET)','MET:Phi(METPhi)','MET:CaloPt(CaloMET)','MET:CaloPhi(CaloMETPhi)','MET:PFCaloPtRatio(PFCaloMETRatio)','MET:Significance(METSignificance)'])
-# #    self.VarsDouble.extend(['MET:RawPt(RawMET)','MET:RawPhi(RawMETPhi)'])
-#     if self.geninfo:
-#         self.VarsDouble.extend(['MET:GenPt(GenMET)','MET:GenPhi(GenMETPhi)'])
-#         self.VectorDouble.extend(['MET:PtUp(METUp)', 'MET:PtDown(METDown)', 'MET:PhiUp(METPhiUp)', 'MET:PhiDown(METPhiDown)'])
-# 
-#     if self.doMETfix:
-#         process.METOrig = process.MET.clone(
-#             METTag = METTagOrig
-#         )
-#         self.VarsDouble.extend(['METOrig:Pt(METOrig)','METOrig:Phi(METPhiOrig)'])
-# #        self.VarsDouble.extend(['METOrig:RawPt(RawMETOrig)','METOrig:RawPhi(RawMETPhiOrig)'])
-#         if self.geninfo:
-#             self.VectorDouble.extend(['METOrig:PtUp(METOrigUp)', 'METOrig:PtDown(METOrigDown)', 'METOrig:PhiUp(METPhiOrigUp)', 'MET:PhiDown(METPhiOrigDown)'])
-# 
-#     from TreeMaker.Utils.mt2producer_cfi import mt2Producer
-#     process.Mt2Producer = mt2Producer.clone(
-#                 JetTag  = cms.InputTag('MHTJets'),
-#                 METTag = METTag
-#         )
-#     self.VarsDouble.extend(['Mt2Producer:mt2(MT2)'])
-#     
+    from TreeMaker.Utils.metdouble_cfi import metdouble
+    process.MET = metdouble.clone(
+        METTag = METTag,
+        GenMETTag = cms.InputTag("slimmedMETs","",self.tagname), #original collection used deliberately here
+        JetTag = cms.InputTag('HTJets'),
+        geninfo = cms.untracked.bool(self.geninfo),
+        InfTagAK8 = JetAK8TagInf,
+    )
+    self.VarsDouble.extend(['MET:Pt(MET)','MET:Phi(METPhi)','MET:CaloPt(CaloMET)','MET:CaloPhi(CaloMETPhi)','MET:PFCaloPtRatio(PFCaloMETRatio)','MET:Significance(METSignificance)'])
+#    self.VarsDouble.extend(['MET:RawPt(RawMET)','MET:RawPhi(RawMETPhi)'])
+    if self.geninfo:
+        self.VarsDouble.extend(['MET:GenPt(GenMET)','MET:GenPhi(GenMETPhi)'])
+        self.VectorDouble.extend(['MET:PtUp(METUp)', 'MET:PtDown(METDown)', 'MET:PhiUp(METPhiUp)', 'MET:PhiDown(METPhiDown)'])
+
+    if self.doMETfix:
+        process.METOrig = process.MET.clone(
+            METTag = METTagOrig
+        )
+        self.VarsDouble.extend(['METOrig:Pt(METOrig)','METOrig:Phi(METPhiOrig)'])
+#        self.VarsDouble.extend(['METOrig:RawPt(RawMETOrig)','METOrig:RawPhi(RawMETPhiOrig)'])
+        if self.geninfo:
+            self.VectorDouble.extend(['METOrig:PtUp(METOrigUp)', 'METOrig:PtDown(METOrigDown)', 'METOrig:PhiUp(METPhiOrigUp)', 'MET:PhiDown(METPhiOrigDown)'])
+
+    from TreeMaker.Utils.mt2producer_cfi import mt2Producer
+    process.Mt2Producer = mt2Producer.clone(
+                JetTag  = cms.InputTag('MHTJets'),
+                METTag = METTag
+        )
+    self.VarsDouble.extend(['Mt2Producer:mt2(MT2)'])
+    
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------
     ## Optional producers (background estimations, control regions)
