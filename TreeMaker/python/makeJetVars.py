@@ -96,36 +96,36 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
     ## ----------------------------------------------------------------------------------------------
     ## NJets
     ## ----------------------------------------------------------------------------------------------
-    # from TreeMaker.Utils.njetint_cfi import njetint
-#     NJets = njetint.clone(
-#         JetTag = HTJetsTag,
-#     )
-#     setattr(process,"NJets"+suff,NJets)
-#     self.VarsInt.extend(['NJets'+suff])
+    from TreeMaker.Utils.njetint_cfi import njetint
+    NJets = njetint.clone(
+        JetTag = HTJetsTag,
+    )
+    setattr(process,"NJets"+suff,NJets)
+    self.VarsInt.extend(['NJets'+suff])
     
     ## ----------------------------------------------------------------------------------------------
     ## BTags
     ## ----------------------------------------------------------------------------------------------
     from TreeMaker.TreeMaker.TMEras import TMeras
     from TreeMaker.Utils.btagint_cfi import btagint
-#     BTags = btagint.clone(
-#         JetTag       = HTJetsTag,
-#         BTagInputTag = cms.string('pfCombinedInclusiveSecondaryVertexV2BJetTags'),
-#         BTagCutValue = cms.double(0.8484)
-#     )
-#     (TMeras.TM2017 | TMeras.TM2018).toModify(BTags,BTagCutValue = cms.double(0.8838))
-#     setattr(process,"BTags"+suff,BTags)
-#     self.VarsInt.extend(['BTags'+suff])
-# 
-#     BTagsDeepCSV = btagint.clone(
-#         JetTag       = HTJetsTag,
-#         BTagInputTag = cms.string('pfDeepCSVDiscriminatorsJetTags:BvsAll'),
-#         BTagCutValue = cms.double(0.6321)
-#     )
-#     (TMeras.TM2017).toModify(BTagsDeepCSV,BTagCutValue = cms.double(0.4941))
-#     (TMeras.TM2018).toModify(BTagsDeepCSV,BTagCutValue = cms.double(0.4184))
-#     setattr(process,"BTagsDeepCSV"+suff,BTagsDeepCSV)
-#     self.VarsInt.extend(['BTagsDeepCSV'+suff])
+    BTags = btagint.clone(
+        JetTag       = HTJetsTag,
+        BTagInputTag = cms.string('pfCombinedInclusiveSecondaryVertexV2BJetTags'),
+        BTagCutValue = cms.double(0.8484)
+    )
+    (TMeras.TM2017 | TMeras.TM2018).toModify(BTags,BTagCutValue = cms.double(0.8838))
+    setattr(process,"BTags"+suff,BTags)
+    self.VarsInt.extend(['BTags'+suff])
+
+    BTagsDeepCSV = btagint.clone(
+        JetTag       = HTJetsTag,
+        BTagInputTag = cms.string('pfDeepCSVDiscriminatorsJetTags:BvsAll'),
+        BTagCutValue = cms.double(0.6321)
+    )
+    (TMeras.TM2017).toModify(BTagsDeepCSV,BTagCutValue = cms.double(0.4941))
+    (TMeras.TM2018).toModify(BTagsDeepCSV,BTagCutValue = cms.double(0.4184))
+    setattr(process,"BTagsDeepCSV"+suff,BTagsDeepCSV)
+    self.VarsInt.extend(['BTagsDeepCSV'+suff])
     
     ## ----------------------------------------------------------------------------------------------
     ## MHT, DeltaPhi
@@ -153,19 +153,19 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
     ## ----------------------------------------------------------------------------------------------
     ## ISR jets
     ## ----------------------------------------------------------------------------------------------
-    # if self.geninfo:
-#         from TreeMaker.Utils.isrjet_cfi import ISRJetProducer
-#         ISRJets = ISRJetProducer.clone(
-#             JetTag = GoodJetsTag,
-#             JetLeptonTag  = cms.InputTag(GoodJetsTag.value()+':JetLeptonMask'),
-#             GenPartTag = cms.InputTag("prunedGenParticles"),
-#             MinPt  = cms.double(30),
-#             MaxEta = cms.double(2.4),
-#         )
-#         setattr(process,"ISRJets"+suff,ISRJets)
-#         if storeProperties>0:
-#             self.VectorBool.extend(['ISRJets'+suff+':SubJetMask(Jets'+suff+'_ISRMask)'])
-#         self.VarsInt.extend(['ISRJets'+suff+'(NJetsISR'+suff+')'])
+    if self.geninfo:
+        from TreeMaker.Utils.isrjet_cfi import ISRJetProducer
+        ISRJets = ISRJetProducer.clone(
+            JetTag = GoodJetsTag,
+            JetLeptonTag  = cms.InputTag(GoodJetsTag.value()+':JetLeptonMask'),
+            GenPartTag = cms.InputTag("prunedGenParticles"),
+            MinPt  = cms.double(30),
+            MaxEta = cms.double(2.4),
+        )
+        setattr(process,"ISRJets"+suff,ISRJets)
+        if storeProperties>0:
+            self.VectorBool.extend(['ISRJets'+suff+':SubJetMask(Jets'+suff+'_ISRMask)'])
+        self.VarsInt.extend(['ISRJets'+suff+'(NJetsISR'+suff+')'])
 
     ## ----------------------------------------------------------------------------------------------
     ## Jet properties
