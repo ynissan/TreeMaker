@@ -429,10 +429,10 @@ def makeTreeFromMiniAOD(self,process):
     process.LeptonsNew = leptonproducer.clone(
         elecIsoValue       = cms.double(0.1), # only has an effect when used with miniIsolation
         UseMiniIsolation   = cms.bool(True),
-        METTag             = METTag  ,
-        rhoCollection      = cms.InputTag("fixedGridRhoFastjetCentralNeutral")
+        METTag             = METTag,
+        rhoCollection      = cms.InputTag("fixedGridRhoFastjetCentralNeutral"),
         minElecPt          = cms.double(0.0),
-        minMuPt            = cms.double(0.0),
+        minMuPt            = cms.double(0.0)
     )
     # from: https://indico.cern.ch/event/732971/contributions/3022843/attachments/1658685/2656462/eleIdTuning.pdf
     (TMeras.TM2017 | TMeras.TM2018).toModify(process.LeptonsNew,
