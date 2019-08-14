@@ -811,20 +811,20 @@ def makeTreeFromMiniAOD(self,process):
         SkipTag=SkipTag,
         METfix=self.doMETfix,
     )
-    # if self.systematics:
-#         process.JetProperties.properties.extend(["jecUnc"])
-#         process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
-#         self.VectorDouble.extend([
-#             'JetProperties:jecUnc(Jets_jecUnc)',
-#         ])
-#     if self.geninfo and self.systematics:
-#         process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
-#         process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
-#         process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
-#         self.VectorDouble.extend([
-#             'JetProperties:jerFactorUp(Jets_jerFactorUp)',
-#             'JetProperties:jerFactorDown(Jets_jerFactorDown)',
-#         ])
+    if self.systematics:
+        process.JetProperties.properties.extend(["jecUnc"])
+        process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
+        self.VectorDouble.extend([
+            'JetProperties:jecUnc(Jets_jecUnc)',
+        ])
+    if self.geninfo and self.systematics:
+        process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
+        process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
+        process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
+        self.VectorDouble.extend([
+            'JetProperties:jerFactorUp(Jets_jerFactorUp)',
+            'JetProperties:jerFactorDown(Jets_jerFactorDown)',
+        ])
 
     # get QG tagging discriminant for subjets
     process.QGTaggerSubjets = process.QGTagger.clone(
