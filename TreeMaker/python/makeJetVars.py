@@ -83,7 +83,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
         MaxEta = cms.double(2.4),
     )
     setattr(process,"HTJets"+suff,HTJets)
-    if storeProperties>0: self.VectorBool.extend(['HTJets'+suff+':SubJetMask(Jets'+suff+'_HTMask)'])
+    #if storeProperties>0: self.VectorBool.extend(['HTJets'+suff+':SubJetMask(Jets'+suff+'_HTMask)'])
     HTJetsTag = cms.InputTag("HTJets"+suff)
     
     from TreeMaker.Utils.htdouble_cfi import htdouble
@@ -91,7 +91,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
         JetTag = HTJetsTag,
     )
     setattr(process,"HT"+suff,HT)
-    self.VarsDouble.extend(['HT'+suff])
+    #self.VarsDouble.extend(['HT'+suff])
     
     ## ----------------------------------------------------------------------------------------------
     ## NJets
@@ -101,7 +101,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
         JetTag = HTJetsTag,
     )
     setattr(process,"NJets"+suff,NJets)
-    self.VarsInt.extend(['NJets'+suff])
+    #self.VarsInt.extend(['NJets'+suff])
     
     ## ----------------------------------------------------------------------------------------------
     ## BTags
@@ -115,7 +115,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
     )
     (TMeras.TM2017 | TMeras.TM2018).toModify(BTags,BTagCutValue = cms.double(0.8838))
     setattr(process,"BTags"+suff,BTags)
-    self.VarsInt.extend(['BTags'+suff])
+    #self.VarsInt.extend(['BTags'+suff])
 
     BTagsDeepCSV = btagint.clone(
         JetTag       = HTJetsTag,
@@ -125,7 +125,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
     (TMeras.TM2017).toModify(BTagsDeepCSV,BTagCutValue = cms.double(0.4941))
     (TMeras.TM2018).toModify(BTagsDeepCSV,BTagCutValue = cms.double(0.4184))
     setattr(process,"BTagsDeepCSV"+suff,BTagsDeepCSV)
-    self.VarsInt.extend(['BTagsDeepCSV'+suff])
+    #self.VarsInt.extend(['BTagsDeepCSV'+suff])
     
     ## ----------------------------------------------------------------------------------------------
     ## MHT, DeltaPhi
@@ -148,7 +148,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
         JetTag = MHTJetsTagOrig if MHTJetsTagOrig is not None else MHTJetsTag,
     )
     setattr(process,"HT5"+suff,HT5)
-    self.VarsDouble.extend(['HT5'+suff])
+    #self.VarsDouble.extend(['HT5'+suff])
 
     ## ----------------------------------------------------------------------------------------------
     ## ISR jets
@@ -163,9 +163,9 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
             MaxEta = cms.double(2.4),
         )
         setattr(process,"ISRJets"+suff,ISRJets)
-        if storeProperties>0:
-            self.VectorBool.extend(['ISRJets'+suff+':SubJetMask(Jets'+suff+'_ISRMask)'])
-        self.VarsInt.extend(['ISRJets'+suff+'(NJetsISR'+suff+')'])
+        #if storeProperties>0:
+        #    self.VectorBool.extend(['ISRJets'+suff+':SubJetMask(Jets'+suff+'_ISRMask)'])
+        #self.VarsInt.extend(['ISRJets'+suff+'(NJetsISR'+suff+')'])
 
     ## ----------------------------------------------------------------------------------------------
     ## Jet properties
@@ -220,8 +220,8 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
                 "hadronFlavor",
             )
         setattr(process,"JetProperties"+suff,JetProperties)
-        self.VectorDouble.extend([
-            'JetProperties'+suff+':bDiscriminatorCSV(Jets'+suff+'_bDiscriminatorCSV)',
+#        self.VectorDouble.extend([
+#            'JetProperties'+suff+':bDiscriminatorCSV(Jets'+suff+'_bDiscriminatorCSV)',
             # 'JetProperties'+suff+':bJetTagDeepCSVprobb(Jets'+suff+'_bJetTagDeepCSVprobb)',
 #             'JetProperties'+suff+':bJetTagDeepCSVprobc(Jets'+suff+'_bJetTagDeepCSVprobc)',
 #             'JetProperties'+suff+':bJetTagDeepCSVprobudsg(Jets'+suff+'_bJetTagDeepCSVprobudsg)',
@@ -240,7 +240,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
 #             'JetProperties'+suff+':chargedEmEnergyFraction(Jets'+suff+'_chargedEmEnergyFraction)',
 #             'JetProperties'+suff+':neutralEmEnergyFraction(Jets'+suff+'_neutralEmEnergyFraction)',
 #             'JetProperties'+suff+':neutralHadronEnergyFraction(Jets'+suff+'_neutralHadronEnergyFraction)',
-        ])
+#        ])
         # self.VectorInt.extend([
 #             'JetProperties'+suff+':partonFlavor(Jets'+suff+'_partonFlavor)',
 #             'JetProperties'+suff+':hadronFlavor(Jets'+suff+'_hadronFlavor)',

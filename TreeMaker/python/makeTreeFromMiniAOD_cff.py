@@ -117,14 +117,14 @@ def makeTreeFromMiniAOD(self,process):
     process.NVtx = primaryvertices.clone(
         VertexCollection  = cms.InputTag('goodVertices'),
     )
-    self.VarsInt.extend(['NVtx'])
+    #self.VarsInt.extend(['NVtx'])
     # also store total number of vertices without quality checks
     process.nAllVertices = primaryvertices.clone(
         VertexCollection  = cms.InputTag('offlineSlimmedPrimaryVertices'),
     )
-    self.VarsInt.extend(['nAllVertices'])
+    #self.VarsInt.extend(['nAllVertices'])
     # also store rho for PU comparisons
-    self.VarsDouble.extend(['fixedGridRhoFastjetAll'])
+    #self.VarsDouble.extend(['fixedGridRhoFastjetAll'])
 
     ## ----------------------------------------------------------------------------------------------
     ## GenParticles
@@ -398,9 +398,9 @@ def makeTreeFromMiniAOD(self,process):
         METTag              = METTag,
     )
 
-    self.VarsInt.extend(['IsolatedElectronTracksVeto:isoTracks(isoElectronTracks)'])
-    self.VarsInt.extend(['IsolatedMuonTracksVeto:isoTracks(isoMuonTracks)'])
-    self.VarsInt.extend(['IsolatedPionTracksVeto:isoTracks(isoPionTracks)'])
+    # self.VarsInt.extend(['IsolatedElectronTracksVeto:isoTracks(isoElectronTracks)'])
+#     self.VarsInt.extend(['IsolatedMuonTracksVeto:isoTracks(isoMuonTracks)'])
+#     self.VarsInt.extend(['IsolatedPionTracksVeto:isoTracks(isoPionTracks)'])
 
     if self.debugtracks:
         # NB: this increases the runtime and size of ntuples by ~10x
@@ -494,7 +494,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_goodVertices"),
         )
-        self.VarsInt.extend(['PrimaryVertexFilter'])
+        #self.VarsInt.extend(['PrimaryVertexFilter'])
 
         process.CSCTightHaloFilter = filterDecisionProducer.clone(
             trigTagArg1 = cms.string('TriggerResults'),
@@ -502,7 +502,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_CSCTightHalo2015Filter"),
         )
-        self.VarsInt.extend(['CSCTightHaloFilter'])
+        #self.VarsInt.extend(['CSCTightHaloFilter'])
         
         process.globalTightHalo2016Filter = filterDecisionProducer.clone(
             trigTagArg1 = cms.string('TriggerResults'),
@@ -510,7 +510,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_globalTightHalo2016Filter"),
         )
-        self.VarsInt.extend(['globalTightHalo2016Filter'])
+        #self.VarsInt.extend(['globalTightHalo2016Filter'])
         
         process.globalSuperTightHalo2016Filter = filterDecisionProducer.clone(
             trigTagArg1 = cms.string('TriggerResults'),
@@ -518,7 +518,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_globalSuperTightHalo2016Filter"),
         )
-        self.VarsInt.extend(['globalSuperTightHalo2016Filter'])
+        #self.VarsInt.extend(['globalSuperTightHalo2016Filter'])
         
         process.HBHENoiseFilter = filterDecisionProducer.clone(
             trigTagArg1 = cms.string('TriggerResults'),
@@ -526,7 +526,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_HBHENoiseFilter"),
         )
-        self.VarsInt.extend(['HBHENoiseFilter'])
+        #self.VarsInt.extend(['HBHENoiseFilter'])
         
         process.HBHEIsoNoiseFilter = filterDecisionProducer.clone(
             trigTagArg1 = cms.string('TriggerResults'),
@@ -534,7 +534,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_HBHENoiseIsoFilter"),
         )
-        self.VarsInt.extend(['HBHEIsoNoiseFilter'])
+        #self.VarsInt.extend(['HBHEIsoNoiseFilter'])
         
         process.EcalDeadCellTriggerPrimitiveFilter = filterDecisionProducer.clone(
             trigTagArg1 = cms.string('TriggerResults'),
@@ -542,7 +542,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3 = cms.string(self.tagname),
             filterName  = cms.string("Flag_EcalDeadCellTriggerPrimitiveFilter"),
         )
-        self.VarsInt.extend(['EcalDeadCellTriggerPrimitiveFilter'])
+        #self.VarsInt.extend(['EcalDeadCellTriggerPrimitiveFilter'])
         
         process.eeBadScFilter = filterDecisionProducer.clone(
             trigTagArg1  = cms.string('TriggerResults'),
@@ -550,7 +550,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3  = cms.string(self.tagname),
             filterName  =   cms.string("Flag_eeBadScFilter"),
         )
-        self.VarsInt.extend(['eeBadScFilter'])
+        #self.VarsInt.extend(['eeBadScFilter'])
         
         process.ecalBadCalibFilter = filterDecisionProducer.clone(
             trigTagArg1  = cms.string('TriggerResults'),
@@ -558,7 +558,7 @@ def makeTreeFromMiniAOD(self,process):
             trigTagArg3  = cms.string(self.tagname),
             filterName  =   cms.string("Flag_ecalBadCalibFilter"),
         )
-        self.VarsInt.extend(['ecalBadCalibFilter'])
+        #self.VarsInt.extend(['ecalBadCalibFilter'])
 
         # some filters need to be rerun
         from RecoMET.METFilters.ecalBadCalibFilter_cfi import ecalBadCalibFilter
@@ -595,19 +595,19 @@ def makeTreeFromMiniAOD(self,process):
                 872421414,872421031,872423083,872421439
             ])
         )
-        self.VarsBool.extend(['ecalBadCalibReducedFilter','ecalBadCalibReducedExtraFilter'])
+        #self.VarsBool.extend(['ecalBadCalibReducedFilter','ecalBadCalibReducedExtraFilter'])
 
         process.load('RecoMET.METFilters.BadChargedCandidateFilter_cfi')
         process.BadChargedCandidateFilter.muons = cms.InputTag("slimmedMuons")
         process.BadChargedCandidateFilter.PFCandidates = cms.InputTag("packedPFCandidates")
         process.BadChargedCandidateFilter.taggingMode = True
-        self.VarsBool.extend(['BadChargedCandidateFilter'])
+        #self.VarsBool.extend(['BadChargedCandidateFilter'])
         
         process.load('RecoMET.METFilters.BadPFMuonFilter_cfi')
         process.BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
         process.BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
         process.BadPFMuonFilter.taggingMode = True
-        self.VarsBool.extend(['BadPFMuonFilter'])
+        #self.VarsBool.extend(['BadPFMuonFilter'])
         
     ## ----------------------------------------------------------------------------------------------
     ## Triggers
@@ -814,17 +814,17 @@ def makeTreeFromMiniAOD(self,process):
     if self.systematics:
         process.JetProperties.properties.extend(["jecUnc"])
         process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
-        self.VectorDouble.extend([
-            'JetProperties:jecUnc(Jets_jecUnc)',
-        ])
+        #self.VectorDouble.extend([
+        #    'JetProperties:jecUnc(Jets_jecUnc)',
+        #])
     if self.geninfo and self.systematics:
         process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
         process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
         process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
-        self.VectorDouble.extend([
-            'JetProperties:jerFactorUp(Jets_jerFactorUp)',
-            'JetProperties:jerFactorDown(Jets_jerFactorDown)',
-        ])
+        # self.VectorDouble.extend([
+#             'JetProperties:jerFactorUp(Jets_jerFactorUp)',
+#             'JetProperties:jerFactorDown(Jets_jerFactorDown)',
+#         ])
 
     # get QG tagging discriminant for subjets
     process.QGTaggerSubjets = process.QGTagger.clone(
@@ -870,17 +870,17 @@ def makeTreeFromMiniAOD(self,process):
     if self.systematics:
         process.JetPropertiesAK8.properties.extend(["jecUnc"])
         process.JetPropertiesAK8.jecUnc = cms.vstring(JetAK8TagJECTmp.value())
-        self.VectorDouble.extend([
-            'JetPropertiesAK8:jecUnc(JetsAK8_jecUnc)',
-        ])
+        # self.VectorDouble.extend([
+#             'JetPropertiesAK8:jecUnc(JetsAK8_jecUnc)',
+#         ])
     if self.geninfo and self.systematics:
         process.JetPropertiesAK8.properties.extend(["jerFactorUp","jerFactorDown"])
         process.JetPropertiesAK8.jerFactorUp = cms.vstring(JetAK8TagJERup.value())
         process.JetPropertiesAK8.jerFactorDown = cms.vstring(JetAK8TagJERdown.value())
-        self.VectorDouble.extend([
-            'JetPropertiesAK8:jerFactorUp(JetsAK8_jerFactorUp)',
-            'JetPropertiesAK8:jerFactorDown(JetsAK8_jerFactorDown)',
-        ])
+        # self.VectorDouble.extend([
+#             'JetPropertiesAK8:jerFactorUp(JetsAK8_jerFactorUp)',
+#             'JetPropertiesAK8:jerFactorDown(JetsAK8_jerFactorDown)',
+#         ])
 
     ## ----------------------------------------------------------------------------------------------
     ## GenJet variables
@@ -974,11 +974,11 @@ def makeTreeFromMiniAOD(self,process):
             DataEra = prefiringDataEra.value,
             L1Maps = cms.string('data/L1PrefiringMaps_new.root'),
         )
-        self.VarsDouble.extend([
-            'L1ECALNonPrefiringProbProducer:NonPrefiringProb',
-            'L1ECALNonPrefiringProbProducer:NonPrefiringProbUp',
-            'L1ECALNonPrefiringProbProducer:NonPrefiringProbDown',
-        ])
+        # self.VarsDouble.extend([
+#             'L1ECALNonPrefiringProbProducer:NonPrefiringProb',
+#             'L1ECALNonPrefiringProbProducer:NonPrefiringProbUp',
+#             'L1ECALNonPrefiringProbProducer:NonPrefiringProbDown',
+#         ])
 
     ## ----------------------------------------------------------------------------------------------
     ## Baseline filters
