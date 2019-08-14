@@ -106,8 +106,8 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
     ## ----------------------------------------------------------------------------------------------
     ## BTags
     ## ----------------------------------------------------------------------------------------------
-    # from TreeMaker.TreeMaker.TMEras import TMeras
-#     from TreeMaker.Utils.btagint_cfi import btagint
+    from TreeMaker.TreeMaker.TMEras import TMeras
+    from TreeMaker.Utils.btagint_cfi import btagint
 #     BTags = btagint.clone(
 #         JetTag       = HTJetsTag,
 #         BTagInputTag = cms.string('pfCombinedInclusiveSecondaryVertexV2BJetTags'),
