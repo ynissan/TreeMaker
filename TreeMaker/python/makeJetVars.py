@@ -15,7 +15,7 @@ def makeMHTVars(self, process, JetTag, HTJetsTag, storeProperties, suff, MHTsuff
         MHTJets.VetoMaxEta = process.pfCandidateJetsWithEEnoise.maxEtaThreshold
         MHTJets.VetoRawPt = process.pfCandidateJetsWithEEnoise.userawPt
     setattr(process,"MHTJets"+suff+MHTsuff,MHTJets)
-    if storeProperties>0: self.VectorBool.extend(['MHTJets'+suff+MHTsuff+':SubJetMask(Jets'+suff+'_MHT'+MHTsuff+'Mask)'])
+    #if storeProperties>0: self.VectorBool.extend(['MHTJets'+suff+MHTsuff+':SubJetMask(Jets'+suff+'_MHT'+MHTsuff+'Mask)'])
     MHTJetsTag = cms.InputTag("MHTJets"+suff+MHTsuff)
     
     from TreeMaker.Utils.mhtdouble_cfi import mhtdouble
@@ -31,8 +31,8 @@ def makeMHTVars(self, process, JetTag, HTJetsTag, storeProperties, suff, MHTsuff
         MHTPhi       = cms.InputTag('MHT'+suff+MHTsuff+':Phi'),
     )
     setattr(process,"DeltaPhi"+suff+MHTsuff,DeltaPhi)
-    self.VarsDouble.extend(['DeltaPhi'+suff+MHTsuff+':DeltaPhi1(DeltaPhi1'+suff+MHTsuff+')','DeltaPhi'+suff+MHTsuff+':DeltaPhi2(DeltaPhi2'+suff+MHTsuff+')',
-                                          'DeltaPhi'+suff+MHTsuff+':DeltaPhi3(DeltaPhi3'+suff+MHTsuff+')','DeltaPhi'+suff+MHTsuff+':DeltaPhi4(DeltaPhi4'+suff+MHTsuff+')'])
+    #self.VarsDouble.extend(['DeltaPhi'+suff+MHTsuff+':DeltaPhi1(DeltaPhi1'+suff+MHTsuff+')','DeltaPhi'+suff+MHTsuff+':DeltaPhi2(DeltaPhi2'+suff+MHTsuff+')',
+    #                                      'DeltaPhi'+suff+MHTsuff+':DeltaPhi3(DeltaPhi3'+suff+MHTsuff+')','DeltaPhi'+suff+MHTsuff+':DeltaPhi4(DeltaPhi4'+suff+MHTsuff+')'])
     
     return process, MHTJetsTag
 
@@ -266,23 +266,23 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
             if self.geninfo:
                 JetProperties.properties.extend(["jerFactor"])
                 JetProperties.jerFactor = cms.vstring("jerFactor")
-                self.VectorDouble.extend([
-                    'JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)',
-                ])
+                # self.VectorDouble.extend([
+#                     'JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)',
+#                 ])
                 if self.systematics:
                     # account for central JER smearing
                     JetProperties.properties.extend(["origIndex"])
                     JetProperties.origIndex = cms.vstring("jerOrigIndex")
-                    self.VectorInt.extend(['JetProperties'+suff+':origIndex(Jets'+suff+'_origIndex)'])
+                    #self.VectorInt.extend(['JetProperties'+suff+':origIndex(Jets'+suff+'_origIndex)'])
 
-            self.VectorInt.extend([
-                'JetProperties'+suff+':chargedHadronMultiplicity(Jets'+suff+'_chargedHadronMultiplicity)',
-                'JetProperties'+suff+':electronMultiplicity(Jets'+suff+'_electronMultiplicity)',
-                'JetProperties'+suff+':muonMultiplicity(Jets'+suff+'_muonMultiplicity)',
-                'JetProperties'+suff+':neutralHadronMultiplicity(Jets'+suff+'_neutralHadronMultiplicity)',
-                'JetProperties'+suff+':photonMultiplicity(Jets'+suff+'_photonMultiplicity)',
-                'JetProperties'+suff+':multiplicity(Jets'+suff+'_multiplicity)',
-            ])
+            # self.VectorInt.extend([
+#                 'JetProperties'+suff+':chargedHadronMultiplicity(Jets'+suff+'_chargedHadronMultiplicity)',
+#                 'JetProperties'+suff+':electronMultiplicity(Jets'+suff+'_electronMultiplicity)',
+#                 'JetProperties'+suff+':muonMultiplicity(Jets'+suff+'_muonMultiplicity)',
+#                 'JetProperties'+suff+':neutralHadronMultiplicity(Jets'+suff+'_neutralHadronMultiplicity)',
+#                 'JetProperties'+suff+':photonMultiplicity(Jets'+suff+'_photonMultiplicity)',
+#                 'JetProperties'+suff+':multiplicity(Jets'+suff+'_multiplicity)',
+#             ])
                                              
     return process
 
@@ -354,11 +354,11 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
             JetPropertiesAK8.properties.append("jerFactor")
             JetPropertiesAK8.jerFactor = cms.vstring("jerFactor")
             JetPropertiesAK8.origIndex = cms.vstring("jecOrigIndex")
-            self.VectorDouble.extend(['JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)'])
+            #self.VectorDouble.extend(['JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)'])
         elif systType=="JER":
             JetPropertiesAK8.origIndex = cms.vstring("jerOrigIndex")
         setattr(process,"JetProperties"+suff,JetPropertiesAK8)
-        self.VectorInt.extend(['JetProperties'+suff+':origIndex(Jets'+suff+'_origIndex)'])
+        #self.VectorInt.extend(['JetProperties'+suff+':origIndex(Jets'+suff+'_origIndex)'])
     elif storeProperties>0:
         # AK8 jet variables - separate instance of jet properties producer
         from TreeMaker.Utils.jetproperties_cfi import jetproperties

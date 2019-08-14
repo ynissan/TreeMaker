@@ -63,8 +63,8 @@ def makeTreeFromMiniAOD(self,process):
             debug = cms.bool(False),
             isLHE = cms.bool(False)
         )
-        self.VarsDouble.extend(['SignalScan:SusyMotherMass','SignalScan:SusyLSPMass'])
-        self.VectorDouble.extend(['SignalScan:SignalParameters'])
+        #self.VarsDouble.extend(['SignalScan:SusyMotherMass','SignalScan:SusyLSPMass'])
+        #self.VectorDouble.extend(['SignalScan:SignalParameters'])
         # set scan type ("None" by default, producer does nothing)
         if self.signal:
             if self.pmssm: process.SignalScan.signalType = "pMSSM"
@@ -1011,9 +1011,9 @@ def makeTreeFromMiniAOD(self,process):
     )
     self.VarsDouble.extend(['MET:Pt(MET)','MET:Phi(METPhi)','MET:CaloPt(CaloMET)','MET:CaloPhi(CaloMETPhi)','MET:PFCaloPtRatio(PFCaloMETRatio)','MET:Significance(METSignificance)'])
 #    self.VarsDouble.extend(['MET:RawPt(RawMET)','MET:RawPhi(RawMETPhi)'])
-    if self.geninfo:
-        self.VarsDouble.extend(['MET:GenPt(GenMET)','MET:GenPhi(GenMETPhi)'])
-        self.VectorDouble.extend(['MET:PtUp(METUp)', 'MET:PtDown(METDown)', 'MET:PhiUp(METPhiUp)', 'MET:PhiDown(METPhiDown)'])
+    #if self.geninfo:
+        #self.VarsDouble.extend(['MET:GenPt(GenMET)','MET:GenPhi(GenMETPhi)'])
+        #self.VectorDouble.extend(['MET:PtUp(METUp)', 'MET:PtDown(METDown)', 'MET:PhiUp(METPhiUp)', 'MET:PhiDown(METPhiDown)'])
 
     if self.doMETfix:
         process.METOrig = process.MET.clone(
@@ -1029,7 +1029,7 @@ def makeTreeFromMiniAOD(self,process):
                 JetTag  = cms.InputTag('MHTJets'),
                 METTag = METTag
         )
-    self.VarsDouble.extend(['Mt2Producer:mt2(MT2)'])
+    #self.VarsDouble.extend(['Mt2Producer:mt2(MT2)'])
     
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------
