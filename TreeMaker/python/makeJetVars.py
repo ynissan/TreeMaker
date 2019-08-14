@@ -222,31 +222,31 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
         setattr(process,"JetProperties"+suff,JetProperties)
         self.VectorDouble.extend([
             'JetProperties'+suff+':bDiscriminatorCSV(Jets'+suff+'_bDiscriminatorCSV)',
-            'JetProperties'+suff+':bJetTagDeepCSVprobb(Jets'+suff+'_bJetTagDeepCSVprobb)',
-            'JetProperties'+suff+':bJetTagDeepCSVprobc(Jets'+suff+'_bJetTagDeepCSVprobc)',
-            'JetProperties'+suff+':bJetTagDeepCSVprobudsg(Jets'+suff+'_bJetTagDeepCSVprobudsg)',
-            'JetProperties'+suff+':bJetTagDeepCSVprobbb(Jets'+suff+'_bJetTagDeepCSVprobbb)',
-            'JetProperties'+suff+':bDiscriminatorDeepCSVBvsAll(Jets'+suff+'_bJetTagDeepCSVBvsAll)',
-            'JetProperties'+suff+':bDiscriminatorDeepCSVCvsB(Jets'+suff+'_bJetTagDeepCSVCvsB)',
-            'JetProperties'+suff+':bDiscriminatorDeepCSVCvsL(Jets'+suff+'_bJetTagDeepCSVCvsL)',
-            'JetProperties'+suff+':bJetTagDeepFlavourprobb(Jets'+suff+'_bJetTagDeepFlavourprobb)',
-            'JetProperties'+suff+':bJetTagDeepFlavourprobc(Jets'+suff+'_bJetTagDeepFlavourprobc)',
-            'JetProperties'+suff+':bJetTagDeepFlavourprobg(Jets'+suff+'_bJetTagDeepFlavourprobg)',
-            'JetProperties'+suff+':bJetTagDeepFlavourproblepb(Jets'+suff+'_bJetTagDeepFlavourproblepb)',
-            'JetProperties'+suff+':bJetTagDeepFlavourprobbb(Jets'+suff+'_bJetTagDeepFlavourprobbb)',
-            'JetProperties'+suff+':bJetTagDeepFlavourprobuds(Jets'+suff+'_bJetTagDeepFlavourprobuds)',
-            'JetProperties'+suff+':muonEnergyFraction(Jets'+suff+'_muonEnergyFraction)',
-            'JetProperties'+suff+':chargedHadronEnergyFraction(Jets'+suff+'_chargedHadronEnergyFraction)',
-            'JetProperties'+suff+':chargedEmEnergyFraction(Jets'+suff+'_chargedEmEnergyFraction)',
-            'JetProperties'+suff+':neutralEmEnergyFraction(Jets'+suff+'_neutralEmEnergyFraction)',
-            'JetProperties'+suff+':neutralHadronEnergyFraction(Jets'+suff+'_neutralHadronEnergyFraction)',
+            # 'JetProperties'+suff+':bJetTagDeepCSVprobb(Jets'+suff+'_bJetTagDeepCSVprobb)',
+#             'JetProperties'+suff+':bJetTagDeepCSVprobc(Jets'+suff+'_bJetTagDeepCSVprobc)',
+#             'JetProperties'+suff+':bJetTagDeepCSVprobudsg(Jets'+suff+'_bJetTagDeepCSVprobudsg)',
+#             'JetProperties'+suff+':bJetTagDeepCSVprobbb(Jets'+suff+'_bJetTagDeepCSVprobbb)',
+#             'JetProperties'+suff+':bDiscriminatorDeepCSVBvsAll(Jets'+suff+'_bJetTagDeepCSVBvsAll)',
+#             'JetProperties'+suff+':bDiscriminatorDeepCSVCvsB(Jets'+suff+'_bJetTagDeepCSVCvsB)',
+#             'JetProperties'+suff+':bDiscriminatorDeepCSVCvsL(Jets'+suff+'_bJetTagDeepCSVCvsL)',
+#             'JetProperties'+suff+':bJetTagDeepFlavourprobb(Jets'+suff+'_bJetTagDeepFlavourprobb)',
+#             'JetProperties'+suff+':bJetTagDeepFlavourprobc(Jets'+suff+'_bJetTagDeepFlavourprobc)',
+#             'JetProperties'+suff+':bJetTagDeepFlavourprobg(Jets'+suff+'_bJetTagDeepFlavourprobg)',
+#             'JetProperties'+suff+':bJetTagDeepFlavourproblepb(Jets'+suff+'_bJetTagDeepFlavourproblepb)',
+#             'JetProperties'+suff+':bJetTagDeepFlavourprobbb(Jets'+suff+'_bJetTagDeepFlavourprobbb)',
+#             'JetProperties'+suff+':bJetTagDeepFlavourprobuds(Jets'+suff+'_bJetTagDeepFlavourprobuds)',
+#             'JetProperties'+suff+':muonEnergyFraction(Jets'+suff+'_muonEnergyFraction)',
+#             'JetProperties'+suff+':chargedHadronEnergyFraction(Jets'+suff+'_chargedHadronEnergyFraction)',
+#             'JetProperties'+suff+':chargedEmEnergyFraction(Jets'+suff+'_chargedEmEnergyFraction)',
+#             'JetProperties'+suff+':neutralEmEnergyFraction(Jets'+suff+'_neutralEmEnergyFraction)',
+#             'JetProperties'+suff+':neutralHadronEnergyFraction(Jets'+suff+'_neutralHadronEnergyFraction)',
         ])
-        self.VectorInt.extend([
-            'JetProperties'+suff+':partonFlavor(Jets'+suff+'_partonFlavor)',
-            'JetProperties'+suff+':hadronFlavor(Jets'+suff+'_hadronFlavor)',
-            'JetProperties'+suff+':chargedMultiplicity(Jets'+suff+'_chargedMultiplicity)',
-            'JetProperties'+suff+':neutralMultiplicity(Jets'+suff+'_neutralMultiplicity)',
-        ])
+        # self.VectorInt.extend([
+#             'JetProperties'+suff+':partonFlavor(Jets'+suff+'_partonFlavor)',
+#             'JetProperties'+suff+':hadronFlavor(Jets'+suff+'_hadronFlavor)',
+#             'JetProperties'+suff+':chargedMultiplicity(Jets'+suff+'_chargedMultiplicity)',
+#             'JetProperties'+suff+':neutralMultiplicity(Jets'+suff+'_neutralMultiplicity)',
+#         ])
         if TMeras.TM80X.isChosen():
             JetProperties.properties = cms.vstring([x for x in JetProperties.properties.value() if not "DeepFlavour" in x])
             self.VectorDouble.setValue([x for x in self.VectorDouble.value() if not "DeepFlavour" in x])
