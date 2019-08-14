@@ -851,7 +851,7 @@ def makeTreeFromMiniAOD(self,process):
     process = self.makeJetVarsAK8(process,
         JetTag=JetAK8Tag,
         suff='AK8',
-        storeProperties=2,
+        storeProperties=1,
         doECFs = not TMeras.TM80X.isChosen(), # temporarily disabled
     )
     TMeras.TM80X.toModify(process.JetPropertiesAK8,
