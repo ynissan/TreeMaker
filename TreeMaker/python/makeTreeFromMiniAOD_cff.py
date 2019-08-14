@@ -804,13 +804,13 @@ def makeTreeFromMiniAOD(self,process):
     # add userfloats & update tag
     process, JetTag = addJetInfo(process, JetTag, ['QGTagger:qgLikelihood','QGTagger:ptD', 'QGTagger:axis2', 'QGTagger:axis1'], ['QGTagger:mult'])
     
-    process = self.makeJetVars(process,
-        JetTag=JetTag,
-        suff='',
-        storeProperties=2,
-        SkipTag=SkipTag,
-        METfix=self.doMETfix,
-    )
+#     process = self.makeJetVars(process,
+#         JetTag=JetTag,
+#         suff='',
+#         storeProperties=2,
+#         SkipTag=SkipTag,
+#         METfix=self.doMETfix,
+#     )
     # if self.systematics:
 #         process.JetProperties.properties.extend(["jecUnc"])
 #         process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
