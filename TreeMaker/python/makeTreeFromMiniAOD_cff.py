@@ -807,7 +807,7 @@ def makeTreeFromMiniAOD(self,process):
     process = self.makeJetVars(process,
         JetTag=JetTag,
         suff='',
-        storeProperties=2,
+        storeProperties=1,
         SkipTag=SkipTag,
         METfix=self.doMETfix,
     )
