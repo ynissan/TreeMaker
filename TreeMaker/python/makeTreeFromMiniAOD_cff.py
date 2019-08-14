@@ -129,67 +129,67 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## GenParticles
     ## ----------------------------------------------------------------------------------------------
-    if self.geninfo:
-        if self.saveMinimalGenParticles:
-            process.genParticles = cms.EDProducer("GenParticlesProducer",
-                genCollection = cms.InputTag("prunedGenParticles"),
-                debug = cms.bool(False),
-                # Particles we want to save from the decay chain of the tops
-                childIds = cms.vint32(1,2,3,4,5,11,12,13,14,15,16,24),
-                # Particles we want to save the last copy from the hard scatter
-                parentIds = cms.vint32(
-                    6,22,23,24,25,
-                    1000021,1000022,1000023,1000024,1000025,1000035,1000037,1000039,
-                    1000001,1000002,1000003,1000004,1000005,1000006,
-                    2000001,2000002,2000003,2000004,2000005,2000006,
-                    4900021,4900023,4900101,4900102,4900111,4900113,4900211,4900213,51,52,53,
-                    5000001,5000002,
-                ),
-                # Other settings
-                keepIds = cms.vint32(),
-                keepFirst = cms.bool(False),
-                keepMinimal = cms.bool(True),
-            )
-        else:
-            process.genParticles = cms.EDProducer("GenParticlesProducer",
-                genCollection = cms.InputTag("prunedGenParticles"),
-                debug = cms.bool(False),
-                childIds = cms.vint32(1,2,3,4,5,11,12,13,14,15,16,22),
-                parentIds = cms.vint32(
-                    1,2,6,23,24,25,
-                    1000021,1000022,1000023,1000024,1000025,1000035,1000037,1000039,
-                    1000001,1000002,1000003,1000004,1000005,1000006,
-                    2000001,2000002,2000003,2000004,2000005,2000006,
-                    4900021,4900023,4900101,4900102,4900111,4900113,4900211,4900213,51,52,53,
-                    5000001,5000002,
-                ),
-                keepIds = cms.vint32(6,23,24,25),
-                keepFirst = cms.bool(True),
-                keepMinimal = cms.bool(False),
-            )
-            # store gluons for signals with Higgs
-            if "T5qqqqZH" in process.source.fileNames[0]: process.genParticles.childIds.append(21)
-        self.VectorTLorentzVector.append("genParticles(GenParticles)")
-        self.VectorInt.append("genParticles:PdgId(GenParticles_PdgId)")
-        self.VectorInt.append("genParticles:Status(GenParticles_Status)")
-        self.VectorInt.append("genParticles:Parent(GenParticles_ParentIdx)")
-        self.VectorInt.append("genParticles:ParentId(GenParticles_ParentId)")
-        if not self.saveMinimalGenParticles:
-            self.VectorBool.append("genParticles:TTFlag(GenParticles_TTFlag)")
-        
-        # for ttbar pT reweighting
-        # params from: https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting#Run_2_strategy
-        process.load("TopQuarkAnalysis.TopEventProducers.sequences.ttGenEvent_cff")
-        process.initSubset.src = cms.InputTag("prunedGenParticles")
-        process.decaySubset.src = cms.InputTag("prunedGenParticles")
-        process.decaySubset.runMode = cms.string("Run2")
-        process.genTops = cms.EDProducer("GenTopProducer",
-            genEvent = cms.InputTag("genEvt"),
-            a = cms.double(0.0615),
-            b = cms.double(-0.0005)
-        )
-        self.VectorRecoCand.append("genTops(GenTops)")
-        self.VarsDouble.append("genTops:weight(GenTopWeight)")
+    # if self.geninfo:
+#         if self.saveMinimalGenParticles:
+#             process.genParticles = cms.EDProducer("GenParticlesProducer",
+#                 genCollection = cms.InputTag("prunedGenParticles"),
+#                 debug = cms.bool(False),
+#                 # Particles we want to save from the decay chain of the tops
+#                 childIds = cms.vint32(1,2,3,4,5,11,12,13,14,15,16,24),
+#                 # Particles we want to save the last copy from the hard scatter
+#                 parentIds = cms.vint32(
+#                     6,22,23,24,25,
+#                     1000021,1000022,1000023,1000024,1000025,1000035,1000037,1000039,
+#                     1000001,1000002,1000003,1000004,1000005,1000006,
+#                     2000001,2000002,2000003,2000004,2000005,2000006,
+#                     4900021,4900023,4900101,4900102,4900111,4900113,4900211,4900213,51,52,53,
+#                     5000001,5000002,
+#                 ),
+#                 # Other settings
+#                 keepIds = cms.vint32(),
+#                 keepFirst = cms.bool(False),
+#                 keepMinimal = cms.bool(True),
+#             )
+#         else:
+#             process.genParticles = cms.EDProducer("GenParticlesProducer",
+#                 genCollection = cms.InputTag("prunedGenParticles"),
+#                 debug = cms.bool(False),
+#                 childIds = cms.vint32(1,2,3,4,5,11,12,13,14,15,16,22),
+#                 parentIds = cms.vint32(
+#                     1,2,6,23,24,25,
+#                     1000021,1000022,1000023,1000024,1000025,1000035,1000037,1000039,
+#                     1000001,1000002,1000003,1000004,1000005,1000006,
+#                     2000001,2000002,2000003,2000004,2000005,2000006,
+#                     4900021,4900023,4900101,4900102,4900111,4900113,4900211,4900213,51,52,53,
+#                     5000001,5000002,
+#                 ),
+#                 keepIds = cms.vint32(6,23,24,25),
+#                 keepFirst = cms.bool(True),
+#                 keepMinimal = cms.bool(False),
+#             )
+#             # store gluons for signals with Higgs
+#             if "T5qqqqZH" in process.source.fileNames[0]: process.genParticles.childIds.append(21)
+#         self.VectorTLorentzVector.append("genParticles(GenParticles)")
+#         self.VectorInt.append("genParticles:PdgId(GenParticles_PdgId)")
+#         self.VectorInt.append("genParticles:Status(GenParticles_Status)")
+#         self.VectorInt.append("genParticles:Parent(GenParticles_ParentIdx)")
+#         self.VectorInt.append("genParticles:ParentId(GenParticles_ParentId)")
+#         if not self.saveMinimalGenParticles:
+#             self.VectorBool.append("genParticles:TTFlag(GenParticles_TTFlag)")
+#         
+#         # for ttbar pT reweighting
+#         # params from: https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting#Run_2_strategy
+#         process.load("TopQuarkAnalysis.TopEventProducers.sequences.ttGenEvent_cff")
+#         process.initSubset.src = cms.InputTag("prunedGenParticles")
+#         process.decaySubset.src = cms.InputTag("prunedGenParticles")
+#         process.decaySubset.runMode = cms.string("Run2")
+#         process.genTops = cms.EDProducer("GenTopProducer",
+#             genEvent = cms.InputTag("genEvt"),
+#             a = cms.double(0.0615),
+#             b = cms.double(-0.0005)
+#         )
+#         self.VectorRecoCand.append("genTops(GenTops)")
+#         self.VarsDouble.append("genTops:weight(GenTopWeight)")
 
     ## ----------------------------------------------------------------------------------------------
     ## JECs
@@ -365,7 +365,7 @@ def makeTreeFromMiniAOD(self,process):
         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
         dR_ConeSize         = cms.double(0.3),
         dz_CutValue         = cms.double(0.1),
-        minPt_PFCandidate   = cms.double(0.0),
+        minPt_PFCandidate   = cms.double(5.0),
         isoCut              = cms.double(0.2),
         pdgId               = cms.int32(11),
         mTCut               = cms.double(100.),
@@ -378,7 +378,7 @@ def makeTreeFromMiniAOD(self,process):
         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
         dR_ConeSize         = cms.double(0.3),
         dz_CutValue         = cms.double(0.1),
-        minPt_PFCandidate   = cms.double(0.0),
+        minPt_PFCandidate   = cms.double(5.0),
         isoCut              = cms.double(0.2), 
         pdgId               = cms.int32(13),
         mTCut               = cms.double(100.),
@@ -391,7 +391,7 @@ def makeTreeFromMiniAOD(self,process):
         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
         dR_ConeSize         = cms.double(0.3),
         dz_CutValue         = cms.double(0.1),
-        minPt_PFCandidate   = cms.double(0.0),
+        minPt_PFCandidate   = cms.double(10.0),
         isoCut              = cms.double(0.1),
         pdgId               = cms.int32(211),
         mTCut               = cms.double(100.),
@@ -432,7 +432,7 @@ def makeTreeFromMiniAOD(self,process):
         METTag             = METTag,
         rhoCollection      = cms.InputTag("fixedGridRhoFastjetCentralNeutral"),
         minElecPt          = cms.double(0.0),
-        minMuPt            = cms.double(0.0)
+        minMuPt            = cms.double(0.0),
     )
     # from: https://indico.cern.ch/event/732971/contributions/3022843/attachments/1658685/2656462/eleIdTuning.pdf
     (TMeras.TM2017 | TMeras.TM2018).toModify(process.LeptonsNew,
@@ -623,38 +623,38 @@ def makeTreeFromMiniAOD(self,process):
     # If the version number of the input trigger name is omitted,
     # any matching trigger will be included (default behavior)
 
-    from TreeMaker.Utils.triggerproducer_cfi import triggerProducer
-    from TreeMaker.TreeMaker.triggerNameList import triggerNameList as _triggerNameList
-    process.TriggerProducer = triggerProducer.clone(
-        trigTagArg1     = cms.string('TriggerResults'),
-        trigTagArg2     = cms.string(''),
-        trigTagArg3     = cms.string(self.hlttagname),
-        prescaleTagArg1  = cms.string('patTrigger'),
-        prescaleTagArg2  = cms.string(''),
-        prescaleTagArg3  = cms.string(''),
-        saveHLTObj = cms.bool(False),
-        triggerNameList = _triggerNameList
-    )
-    self.VectorInt.extend(['TriggerProducer:TriggerPass','TriggerProducer:TriggerPrescales','TriggerProducer:TriggerVersion'])
-    self.VectorString.extend(['TriggerProducer:TriggerNames'])
-    if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0]:
-        process.TriggerProducer.saveHLTObj = cms.bool(True)
-        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
-        process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
-        self.VectorTLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
-    elif "SingleMuon" in process.source.fileNames[0]:
-        process.TriggerProducer.saveHLTObj = cms.bool(True)
-        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Mu50_v")
-        process.TriggerProducer.saveHLTObjName = cms.string("HLTMuonObjects")
-        self.VectorTLorentzVector.extend(['TriggerProducer:HLTMuonObjects'])
-
-    if not self.geninfo:
-        from TreeMaker.Utils.prescaleweightproducer_cfi import prescaleweightProducer
-        process.PrescaleWeightProducer = prescaleweightProducer.clone()
-        process.PrescaleWeightProducer.bits.setProcessName(self.hlttagname)
-        self.VarsDouble.extend(['PrescaleWeightProducer:weight(PrescaleWeightHT)'])
-        self.VarsDouble.extend(['PrescaleWeightProducer:ht(HTOnline)'])
-        self.VarsDouble.extend(['PrescaleWeightProducer:mht(MHTOnline)'])
+    # from TreeMaker.Utils.triggerproducer_cfi import triggerProducer
+#     from TreeMaker.TreeMaker.triggerNameList import triggerNameList as _triggerNameList
+#     process.TriggerProducer = triggerProducer.clone(
+#         trigTagArg1     = cms.string('TriggerResults'),
+#         trigTagArg2     = cms.string(''),
+#         trigTagArg3     = cms.string(self.hlttagname),
+#         prescaleTagArg1  = cms.string('patTrigger'),
+#         prescaleTagArg2  = cms.string(''),
+#         prescaleTagArg3  = cms.string(''),
+#         saveHLTObj = cms.bool(False),
+#         triggerNameList = _triggerNameList
+#     )
+#     self.VectorInt.extend(['TriggerProducer:TriggerPass','TriggerProducer:TriggerPrescales','TriggerProducer:TriggerVersion'])
+#     self.VectorString.extend(['TriggerProducer:TriggerNames'])
+#     if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0]:
+#         process.TriggerProducer.saveHLTObj = cms.bool(True)
+#         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
+#         process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
+#         self.VectorTLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
+#     elif "SingleMuon" in process.source.fileNames[0]:
+#         process.TriggerProducer.saveHLTObj = cms.bool(True)
+#         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Mu50_v")
+#         process.TriggerProducer.saveHLTObjName = cms.string("HLTMuonObjects")
+#         self.VectorTLorentzVector.extend(['TriggerProducer:HLTMuonObjects'])
+# 
+#     if not self.geninfo:
+#         from TreeMaker.Utils.prescaleweightproducer_cfi import prescaleweightProducer
+#         process.PrescaleWeightProducer = prescaleweightProducer.clone()
+#         process.PrescaleWeightProducer.bits.setProcessName(self.hlttagname)
+#         self.VarsDouble.extend(['PrescaleWeightProducer:weight(PrescaleWeightHT)'])
+#         self.VarsDouble.extend(['PrescaleWeightProducer:ht(HTOnline)'])
+#         self.VarsDouble.extend(['PrescaleWeightProducer:mht(MHTOnline)'])
 
     
     ## ----------------------------------------------------------------------------------------------
@@ -885,81 +885,81 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## GenJet variables
     ## ----------------------------------------------------------------------------------------------
-    if self.geninfo:
-        # store all genjets
-        self.VectorRecoCand.extend ( [ 'slimmedGenJets(GenJets)' ] )
-    
-        from TreeMaker.Utils.subJetSelection_cfi import SubGenJetSelection
-        
-        process.GenHTJets = SubGenJetSelection.clone(
-            JetTag = cms.InputTag('slimmedGenJets'),
-            MinPt  = cms.double(30),
-            MaxEta = cms.double(2.4),
-        )
-        self.VectorBool.extend(['GenHTJets:SubJetMask(GenJets_HTMask)'])
-        
-        # make gen HT
-        from TreeMaker.Utils.htdouble_cfi import htdouble
-        process.GenHT = htdouble.clone(
-            JetTag = cms.InputTag("GenHTJets"),
-        )
-        self.VarsDouble.extend(['GenHT'])
-        
-        process.GenMHTJets = SubGenJetSelection.clone(
-            JetTag = cms.InputTag('slimmedGenJets'),
-            MinPt  = cms.double(30),
-            MaxEta = cms.double(5.0),
-        )
-        self.VectorBool.extend(['GenMHTJets:SubJetMask(GenJets_MHTMask)'])
-        
-        # make gen MHT
-        from TreeMaker.Utils.mhtdouble_cfi import mhtdouble
-        process.GenMHT = mhtdouble.clone(
-            JetTag  = cms.InputTag('GenMHTJets'),
-        )
-        self.VarsDouble.extend(['GenMHT:Pt(GenMHT)','GenMHT:Phi(GenMHTPhi)'])
-    
-        # substructure for genjets
-        from RecoJets.Configuration.RecoGenJets_cff import ak8GenJetsNoNu
-        from RecoJets.JetProducers.SubJetParameters_cfi import SubJetParameters
-        process.ak8GenJetsPruned = ak8GenJetsNoNu.clone(
-            SubJetParameters,
-            usePruning = cms.bool(True),
-            useExplicitGhosts = cms.bool(True),
-            writeCompound = cms.bool(True),
-            jetCollInstanceName=cms.string("SubJets"),
-            jetPtMin = 170.,
-            doAreaFastjet = cms.bool(False),
-            src = cms.InputTag("packedGenParticles"),
-        )
-        process.ak8GenJetsSoftDrop = ak8GenJetsNoNu.clone(
-            useSoftDrop = cms.bool(True),
-            zcut = cms.double(0.1),
-            beta = cms.double(0.0),
-            R0   = cms.double(0.5),
-            useExplicitGhosts = cms.bool(True),
-            writeCompound = cms.bool(True),
-            jetCollInstanceName=cms.string("SubJets"),
-            jetPtMin = 170.,
-            src = cms.InputTag("packedGenParticles"),
-        )
-
-        process.ak8GenJetProperties = cms.EDProducer("GenJetProperties",
-            GenJetTag = cms.InputTag("slimmedGenJetsAK8"),
-            PrunedGenJetTag = cms.InputTag("ak8GenJetsPruned"),
-            SoftDropGenJetTag = cms.InputTag("ak8GenJetsSoftDrop"),
-            distMax = cms.double(0.8),
-            jetPtFilter = cms.double(150),
-        )
-        self.VectorDouble.extend([
-            'ak8GenJetProperties:prunedMass(GenJetsAK8_prunedMass)',
-            'ak8GenJetProperties:softDropMass(GenJetsAK8_softDropMass)',
-        ])
-        self.VectorInt.extend([
-            'ak8GenJetProperties:multiplicity(GenJetsAK8_multiplicity)',
-        ])
-        # store AK8 genjets above pt cut
-        self.VectorRecoCand.extend (['ak8GenJetProperties(GenJetsAK8)'])
+    # if self.geninfo:
+#         # store all genjets
+#         self.VectorRecoCand.extend ( [ 'slimmedGenJets(GenJets)' ] )
+#     
+#         from TreeMaker.Utils.subJetSelection_cfi import SubGenJetSelection
+#         
+#         process.GenHTJets = SubGenJetSelection.clone(
+#             JetTag = cms.InputTag('slimmedGenJets'),
+#             MinPt  = cms.double(30),
+#             MaxEta = cms.double(2.4),
+#         )
+#         self.VectorBool.extend(['GenHTJets:SubJetMask(GenJets_HTMask)'])
+#         
+#         # make gen HT
+#         from TreeMaker.Utils.htdouble_cfi import htdouble
+#         process.GenHT = htdouble.clone(
+#             JetTag = cms.InputTag("GenHTJets"),
+#         )
+#         self.VarsDouble.extend(['GenHT'])
+#         
+#         process.GenMHTJets = SubGenJetSelection.clone(
+#             JetTag = cms.InputTag('slimmedGenJets'),
+#             MinPt  = cms.double(30),
+#             MaxEta = cms.double(5.0),
+#         )
+#         self.VectorBool.extend(['GenMHTJets:SubJetMask(GenJets_MHTMask)'])
+#         
+#         # make gen MHT
+#         from TreeMaker.Utils.mhtdouble_cfi import mhtdouble
+#         process.GenMHT = mhtdouble.clone(
+#             JetTag  = cms.InputTag('GenMHTJets'),
+#         )
+#         self.VarsDouble.extend(['GenMHT:Pt(GenMHT)','GenMHT:Phi(GenMHTPhi)'])
+#     
+#         # substructure for genjets
+#         from RecoJets.Configuration.RecoGenJets_cff import ak8GenJetsNoNu
+#         from RecoJets.JetProducers.SubJetParameters_cfi import SubJetParameters
+#         process.ak8GenJetsPruned = ak8GenJetsNoNu.clone(
+#             SubJetParameters,
+#             usePruning = cms.bool(True),
+#             useExplicitGhosts = cms.bool(True),
+#             writeCompound = cms.bool(True),
+#             jetCollInstanceName=cms.string("SubJets"),
+#             jetPtMin = 170.,
+#             doAreaFastjet = cms.bool(False),
+#             src = cms.InputTag("packedGenParticles"),
+#         )
+#         process.ak8GenJetsSoftDrop = ak8GenJetsNoNu.clone(
+#             useSoftDrop = cms.bool(True),
+#             zcut = cms.double(0.1),
+#             beta = cms.double(0.0),
+#             R0   = cms.double(0.5),
+#             useExplicitGhosts = cms.bool(True),
+#             writeCompound = cms.bool(True),
+#             jetCollInstanceName=cms.string("SubJets"),
+#             jetPtMin = 170.,
+#             src = cms.InputTag("packedGenParticles"),
+#         )
+# 
+#         process.ak8GenJetProperties = cms.EDProducer("GenJetProperties",
+#             GenJetTag = cms.InputTag("slimmedGenJetsAK8"),
+#             PrunedGenJetTag = cms.InputTag("ak8GenJetsPruned"),
+#             SoftDropGenJetTag = cms.InputTag("ak8GenJetsSoftDrop"),
+#             distMax = cms.double(0.8),
+#             jetPtFilter = cms.double(150),
+#         )
+#         self.VectorDouble.extend([
+#             'ak8GenJetProperties:prunedMass(GenJetsAK8_prunedMass)',
+#             'ak8GenJetProperties:softDropMass(GenJetsAK8_softDropMass)',
+#         ])
+#         self.VectorInt.extend([
+#             'ak8GenJetProperties:multiplicity(GenJetsAK8_multiplicity)',
+#         ])
+#         # store AK8 genjets above pt cut
+#         self.VectorRecoCand.extend (['ak8GenJetProperties(GenJetsAK8)'])
 
     ## ----------------------------------------------------------------------------------------------
     ## Prefiring weights
@@ -1040,13 +1040,13 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## Hadronic Tau Background
     ## ----------------------------------------------------------------------------------------------
-    if self.hadtau:
-        dorecluster = False
-        if self.hadtaurecluster==0: dorecluster = False
-        elif self.hadtaurecluster==1: dorecluster = ("TTJets" in process.source.fileNames[0] or "WJets" in process.source.fileNames[0])
-        elif self.hadtaurecluster==2: dorecluster = geninfo
-        elif self.hadtaurecluster==3: dorecluster = True
-        process = self.doHadTauBkg(process,JetTagBeforeSmearing,dorecluster)
+    # if self.hadtau:
+#         dorecluster = False
+#         if self.hadtaurecluster==0: dorecluster = False
+#         elif self.hadtaurecluster==1: dorecluster = ("TTJets" in process.source.fileNames[0] or "WJets" in process.source.fileNames[0])
+#         elif self.hadtaurecluster==2: dorecluster = geninfo
+#         elif self.hadtaurecluster==3: dorecluster = True
+#         process = self.doHadTauBkg(process,JetTagBeforeSmearing,dorecluster)
 
     ## ----------------------------------------------------------------------------------------------
     ## Lost Lepton Background
@@ -1057,34 +1057,34 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## Zinv Background
     ## ----------------------------------------------------------------------------------------------
-    if self.doZinv:
-        from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg
-        process = self.doZinvBkg(process)
+    # if self.doZinv:
+#         from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg
+#         process = self.doZinvBkg(process)
 
     ## ----------------------------------------------------------------------------------------------
     ## Semi-visible jets
     ## ----------------------------------------------------------------------------------------------
-    if self.semivisible:
-        process.HiddenSector = cms.EDProducer("HiddenSectorProducer",
-            JetTag = JetAK8Tag,
-            MetTag = METTag,
-            GenTag = cms.InputTag("prunedGenParticles"),
-            DarkIDs = cms.vuint32(51,52,53),
-            DarkQuarkID = cms.uint32(4900101),
-            DarkMediatorID = cms.uint32(4900023),
-        )
-        self.VarsDouble.extend([
-            'HiddenSector:MJJ(MJJ_AK8)',
-            'HiddenSector:Mmc(Mmc_AK8)',
-            'HiddenSector:MT(MT_AK8)',
-            'HiddenSector:DeltaPhi1(DeltaPhi1_AK8)',
-            'HiddenSector:DeltaPhi2(DeltaPhi2_AK8)',
-            'HiddenSector:DeltaPhiMin(DeltaPhiMin_AK8)',
-        ])
-        if self.geninfo:
-            self.VectorBool.extend([
-                'HiddenSector:isHV(JetsAK8_isHV)'
-            ])
+    # if self.semivisible:
+#         process.HiddenSector = cms.EDProducer("HiddenSectorProducer",
+#             JetTag = JetAK8Tag,
+#             MetTag = METTag,
+#             GenTag = cms.InputTag("prunedGenParticles"),
+#             DarkIDs = cms.vuint32(51,52,53),
+#             DarkQuarkID = cms.uint32(4900101),
+#             DarkMediatorID = cms.uint32(4900023),
+#         )
+#         self.VarsDouble.extend([
+#             'HiddenSector:MJJ(MJJ_AK8)',
+#             'HiddenSector:Mmc(Mmc_AK8)',
+#             'HiddenSector:MT(MT_AK8)',
+#             'HiddenSector:DeltaPhi1(DeltaPhi1_AK8)',
+#             'HiddenSector:DeltaPhi2(DeltaPhi2_AK8)',
+#             'HiddenSector:DeltaPhiMin(DeltaPhiMin_AK8)',
+#         ])
+#         if self.geninfo:
+#             self.VectorBool.extend([
+#                 'HiddenSector:isHV(JetsAK8_isHV)'
+#             ])
 
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------
