@@ -1051,8 +1051,8 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## Lost Lepton Background
     ## ----------------------------------------------------------------------------------------------
-    #if self.lostlepton:
-    #    process = self.doLostLeptonBkg(process,METTag)
+    if self.lostlepton:
+        process = self.doLostLeptonBkg(process,METTag)
 
     ## ----------------------------------------------------------------------------------------------
     ## Zinv Background
