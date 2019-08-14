@@ -23,7 +23,7 @@ def makeMHTVars(self, process, JetTag, HTJetsTag, storeProperties, suff, MHTsuff
         JetTag  = MHTJetsTag,
     )
     setattr(process,"MHT"+suff+MHTsuff,MHT)
-    self.VarsDouble.extend(['MHT'+suff+MHTsuff+':Pt(MHT'+suff+MHTsuff+')','MHT'+suff+MHTsuff+':Phi(MHTPhi'+suff+MHTsuff+')'])
+    #self.VarsDouble.extend(['MHT'+suff+MHTsuff+':Pt(MHT'+suff+MHTsuff+')','MHT'+suff+MHTsuff+':Phi(MHTPhi'+suff+MHTsuff+')'])
     
     from TreeMaker.Utils.deltaphidouble_cfi import deltaphidouble
     DeltaPhi = deltaphidouble.clone(
@@ -55,10 +55,10 @@ def makeGoodJets(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInpu
     setattr(process,"GoodJets"+suff,GoodJets)
     GoodJetsTag = cms.InputTag("GoodJets"+suff)
     self.VarsBool.extend(['GoodJets'+suff+':JetID(JetID'+suff+')'])
-    if storeProperties>0:
-        self.VectorRecoCand.extend(['GoodJets'+suff+'(Jets'+suff+')'])
-        self.VectorBool.extend(['GoodJets'+suff+':JetIDMask(Jets'+suff+'_ID)'])
-        if len(SkipTag)>0: self.VectorBool.extend(['GoodJets'+suff+':JetLeptonMask(Jets'+suff+'_LeptonMask)'])
+    #if storeProperties>0:
+        #self.VectorRecoCand.extend(['GoodJets'+suff+'(Jets'+suff+')'])
+        #self.VectorBool.extend(['GoodJets'+suff+':JetIDMask(Jets'+suff+'_ID)'])
+        #if len(SkipTag)>0: self.VectorBool.extend(['GoodJets'+suff+':JetLeptonMask(Jets'+suff+'_LeptonMask)'])
     return (process,GoodJetsTag)
 
 # AK4 storeProperties levels:

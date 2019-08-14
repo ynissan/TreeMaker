@@ -1009,7 +1009,7 @@ def makeTreeFromMiniAOD(self,process):
         geninfo = cms.untracked.bool(self.geninfo),
         InfTagAK8 = JetAK8TagInf,
     )
-    self.VarsDouble.extend(['MET:Pt(MET)','MET:Phi(METPhi)','MET:CaloPt(CaloMET)','MET:CaloPhi(CaloMETPhi)','MET:PFCaloPtRatio(PFCaloMETRatio)','MET:Significance(METSignificance)'])
+    self.VarsDouble.extend(['MET:Pt(MET)','MET:Phi(METPhi)'])#,'MET:CaloPt(CaloMET)','MET:CaloPhi(CaloMETPhi)','MET:PFCaloPtRatio(PFCaloMETRatio)','MET:Significance(METSignificance)'])
 #    self.VarsDouble.extend(['MET:RawPt(RawMET)','MET:RawPhi(RawMETPhi)'])
     #if self.geninfo:
         #self.VarsDouble.extend(['MET:GenPt(GenMET)','MET:GenPhi(GenMETPhi)'])
