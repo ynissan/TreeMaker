@@ -74,28 +74,28 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## WeightProducer
     ## ----------------------------------------------------------------------------------------------
-    if self.geninfo:
-        from TreeMaker.WeightProducer.getWeightProducer_cff import getWeightProducer
-        process.WeightProducer = getWeightProducer(process.source.fileNames[0],process.SignalScan.signalType!="None")
-        process.WeightProducer.Lumi                       = cms.double(1) #default: 1 pb-1 (unit value)
-        process.WeightProducer.FileNamePUDataDistribution = cms.string(self.pufile)
-        process.WeightProducer.FileNamePUMCDistribution = cms.string(self.wrongpufile)
-        process.WeightProducer.SampleName = cms.string(self.sample)
-        self.VarsDouble.extend(['WeightProducer:weight(Weight)','WeightProducer:xsec(CrossSection)','WeightProducer:nevents(NumEvents)',
-                           'WeightProducer:TrueNumInteractions','WeightProducer:PUweight(puWeight)','WeightProducer:PUSysUp(puSysUp)','WeightProducer:PUSysDown(puSysDown)'])
-        self.VarsInt.extend(['WeightProducer:NumInteractions'])
+    # if self.geninfo:
+#         from TreeMaker.WeightProducer.getWeightProducer_cff import getWeightProducer
+#         process.WeightProducer = getWeightProducer(process.source.fileNames[0],process.SignalScan.signalType!="None")
+#         process.WeightProducer.Lumi                       = cms.double(1) #default: 1 pb-1 (unit value)
+#         process.WeightProducer.FileNamePUDataDistribution = cms.string(self.pufile)
+#         process.WeightProducer.FileNamePUMCDistribution = cms.string(self.wrongpufile)
+#         process.WeightProducer.SampleName = cms.string(self.sample)
+#         self.VarsDouble.extend(['WeightProducer:weight(Weight)','WeightProducer:xsec(CrossSection)','WeightProducer:nevents(NumEvents)',
+#                            'WeightProducer:TrueNumInteractions','WeightProducer:PUweight(puWeight)','WeightProducer:PUSysUp(puSysUp)','WeightProducer:PUSysDown(puSysDown)'])
+#         self.VarsInt.extend(['WeightProducer:NumInteractions'])
 
     ## ----------------------------------------------------------------------------------------------
     ## PDF weights for PDF systematics
     ## ----------------------------------------------------------------------------------------------
-    if self.geninfo and self.doPDFs:
-        from TreeMaker.Utils.pdfweightproducer_cfi import PDFWeightProducer
-        process.PDFWeights = PDFWeightProducer.clone(
-            recalculatePDFs = cms.bool(self.signal),
-            normalize = (not "SVJ" in self.sample), # skip normalization only for SVJ signals
-            pdfSetName = cms.string("NNPDF31_lo_as_0130"),
-        )
-        self.VectorDouble.extend(['PDFWeights:PDFweights','PDFWeights:ScaleWeights','PDFWeights:PSweights'])
+    # if self.geninfo and self.doPDFs:
+#         from TreeMaker.Utils.pdfweightproducer_cfi import PDFWeightProducer
+#         process.PDFWeights = PDFWeightProducer.clone(
+#             recalculatePDFs = cms.bool(self.signal),
+#             normalize = (not "SVJ" in self.sample), # skip normalization only for SVJ signals
+#             pdfSetName = cms.string("NNPDF31_lo_as_0130"),
+#         )
+#         self.VectorDouble.extend(['PDFWeights:PDFweights','PDFWeights:ScaleWeights','PDFWeights:PSweights'])
 
     ## ----------------------------------------------------------------------------------------------
     ## GenHT for stitching together MC samples
@@ -357,62 +357,62 @@ def makeTreeFromMiniAOD(self,process):
     ## ----------------------------------------------------------------------------------------------
     ## IsoTracks
     ## ----------------------------------------------------------------------------------------------
-    from TreeMaker.Utils.trackIsolationMaker_cfi import trackIsolationFilter
-
-    process.IsolatedElectronTracksVeto = trackIsolationFilter.clone(
-        doTrkIsoVeto        = False,
-        vertexInputTag      = cms.InputTag("goodVertices"),
-        pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
-        dR_ConeSize         = cms.double(0.3),
-        dz_CutValue         = cms.double(0.1),
-        minPt_PFCandidate   = cms.double(5.0),
-        isoCut              = cms.double(0.2),
-        pdgId               = cms.int32(11),
-        mTCut               = cms.double(100.),
-        METTag              = METTag,
-    )
-
-    process.IsolatedMuonTracksVeto = trackIsolationFilter.clone(
-        doTrkIsoVeto        = False,
-        vertexInputTag      = cms.InputTag("goodVertices"),
-        pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
-        dR_ConeSize         = cms.double(0.3),
-        dz_CutValue         = cms.double(0.1),
-        minPt_PFCandidate   = cms.double(5.0),
-        isoCut              = cms.double(0.2), 
-        pdgId               = cms.int32(13),
-        mTCut               = cms.double(100.),
-        METTag              = METTag,
-    )
-
-    process.IsolatedPionTracksVeto = trackIsolationFilter.clone(
-        doTrkIsoVeto        = False,
-        vertexInputTag      = cms.InputTag("goodVertices"),
-        pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
-        dR_ConeSize         = cms.double(0.3),
-        dz_CutValue         = cms.double(0.1),
-        minPt_PFCandidate   = cms.double(10.0),
-        isoCut              = cms.double(0.1),
-        pdgId               = cms.int32(211),
-        mTCut               = cms.double(100.),
-        METTag              = METTag,
-    )
-
-    self.VarsInt.extend(['IsolatedElectronTracksVeto:isoTracks(isoElectronTracks)'])
-    self.VarsInt.extend(['IsolatedMuonTracksVeto:isoTracks(isoMuonTracks)'])
-    self.VarsInt.extend(['IsolatedPionTracksVeto:isoTracks(isoPionTracks)'])
-
-    if self.debugtracks:
-        # NB: this increases the runtime and size of ntuples by ~10x
-        # do not turn on unless you really want to save all the isotrack quantities!!!
-        # just store the full set of isotrack quantities once
-        process.IsolatedPionTracksVeto.debug = cms.bool(True)
-        self.VectorTLorentzVector.extend(['IsolatedPionTracksVeto:pfcands(PFCands)'])
-        self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandstrkiso(PFCands_trkiso)'])
-        self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsdzpv(PFCands_dzpv)'])
-        self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsmT(PFCands_mT)'])
-        self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandschg(PFCands_charge)'])
-        self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandsid(PFCands_id)'])
+    # from TreeMaker.Utils.trackIsolationMaker_cfi import trackIsolationFilter
+# 
+#     process.IsolatedElectronTracksVeto = trackIsolationFilter.clone(
+#         doTrkIsoVeto        = False,
+#         vertexInputTag      = cms.InputTag("goodVertices"),
+#         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
+#         dR_ConeSize         = cms.double(0.3),
+#         dz_CutValue         = cms.double(0.1),
+#         minPt_PFCandidate   = cms.double(5.0),
+#         isoCut              = cms.double(0.2),
+#         pdgId               = cms.int32(11),
+#         mTCut               = cms.double(100.),
+#         METTag              = METTag,
+#     )
+# 
+#     process.IsolatedMuonTracksVeto = trackIsolationFilter.clone(
+#         doTrkIsoVeto        = False,
+#         vertexInputTag      = cms.InputTag("goodVertices"),
+#         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
+#         dR_ConeSize         = cms.double(0.3),
+#         dz_CutValue         = cms.double(0.1),
+#         minPt_PFCandidate   = cms.double(5.0),
+#         isoCut              = cms.double(0.2), 
+#         pdgId               = cms.int32(13),
+#         mTCut               = cms.double(100.),
+#         METTag              = METTag,
+#     )
+# 
+#     process.IsolatedPionTracksVeto = trackIsolationFilter.clone(
+#         doTrkIsoVeto        = False,
+#         vertexInputTag      = cms.InputTag("goodVertices"),
+#         pfCandidatesTag     = cms.InputTag("packedPFCandidates"),
+#         dR_ConeSize         = cms.double(0.3),
+#         dz_CutValue         = cms.double(0.1),
+#         minPt_PFCandidate   = cms.double(10.0),
+#         isoCut              = cms.double(0.1),
+#         pdgId               = cms.int32(211),
+#         mTCut               = cms.double(100.),
+#         METTag              = METTag,
+#     )
+# 
+#     self.VarsInt.extend(['IsolatedElectronTracksVeto:isoTracks(isoElectronTracks)'])
+#     self.VarsInt.extend(['IsolatedMuonTracksVeto:isoTracks(isoMuonTracks)'])
+#     self.VarsInt.extend(['IsolatedPionTracksVeto:isoTracks(isoPionTracks)'])
+# 
+#     if self.debugtracks:
+#         # NB: this increases the runtime and size of ntuples by ~10x
+#         # do not turn on unless you really want to save all the isotrack quantities!!!
+#         # just store the full set of isotrack quantities once
+#         process.IsolatedPionTracksVeto.debug = cms.bool(True)
+#         self.VectorTLorentzVector.extend(['IsolatedPionTracksVeto:pfcands(PFCands)'])
+#         self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandstrkiso(PFCands_trkiso)'])
+#         self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsdzpv(PFCands_dzpv)'])
+#         self.VectorDouble.extend(['IsolatedPionTracksVeto:pfcandsmT(PFCands_mT)'])
+#         self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandschg(PFCands_charge)'])
+#         self.VectorInt.extend(['IsolatedPionTracksVeto:pfcandsid(PFCands_id)'])
     
     ## ----------------------------------------------------------------------------------------------
     ## Electrons/Muons
@@ -811,20 +811,20 @@ def makeTreeFromMiniAOD(self,process):
         SkipTag=SkipTag,
         METfix=self.doMETfix,
     )
-    if self.systematics:
-        process.JetProperties.properties.extend(["jecUnc"])
-        process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
-        self.VectorDouble.extend([
-            'JetProperties:jecUnc(Jets_jecUnc)',
-        ])
-    if self.geninfo and self.systematics:
-        process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
-        process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
-        process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
-        self.VectorDouble.extend([
-            'JetProperties:jerFactorUp(Jets_jerFactorUp)',
-            'JetProperties:jerFactorDown(Jets_jerFactorDown)',
-        ])
+    # if self.systematics:
+#         process.JetProperties.properties.extend(["jecUnc"])
+#         process.JetProperties.jecUnc = cms.vstring(JetTagJECTmp.value())
+#         self.VectorDouble.extend([
+#             'JetProperties:jecUnc(Jets_jecUnc)',
+#         ])
+#     if self.geninfo and self.systematics:
+#         process.JetProperties.properties.extend(["jerFactorUp","jerFactorDown"])
+#         process.JetProperties.jerFactorUp = cms.vstring(JetTagJERup.value())
+#         process.JetProperties.jerFactorDown = cms.vstring(JetTagJERdown.value())
+#         self.VectorDouble.extend([
+#             'JetProperties:jerFactorUp(Jets_jerFactorUp)',
+#             'JetProperties:jerFactorDown(Jets_jerFactorDown)',
+#         ])
 
     # get QG tagging discriminant for subjets
     process.QGTaggerSubjets = process.QGTagger.clone(
