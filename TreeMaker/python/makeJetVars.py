@@ -54,7 +54,7 @@ def makeGoodJets(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInpu
     if len(puppiSpecific)>0: GoodJets.puppiPrefix = puppiSpecific
     setattr(process,"GoodJets"+suff,GoodJets)
     GoodJetsTag = cms.InputTag("GoodJets"+suff)
-    self.VarsBool.extend(['GoodJets'+suff+':JetID(JetID'+suff+')'])
+    #self.VarsBool.extend(['GoodJets'+suff+':JetID(JetID'+suff+')'])
     #if storeProperties>0:
         #self.VectorRecoCand.extend(['GoodJets'+suff+'(Jets'+suff+')'])
         #self.VectorBool.extend(['GoodJets'+suff+':JetIDMask(Jets'+suff+'_ID)'])

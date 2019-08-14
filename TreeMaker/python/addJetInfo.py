@@ -19,6 +19,6 @@ def addJetInfo(process, JetTag, userFloats=[], userInts=[], btagDiscrs=cms.VInpu
     if len(btagDiscrs)>0:
         patJetsAuxiliary.discriminatorSources = btagDiscrs
         patJetsAuxiliary.addBTagInfo = cms.bool(True)
-    setattr(process,JetTagOut.value(),patJetsAuxiliary)
+    #setattr(process,JetTagOut.value(),patJetsAuxiliary)
     
     return (process, JetTagOut)
